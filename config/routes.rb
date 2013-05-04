@@ -1,4 +1,6 @@
 RainbowJump::Application.routes.draw do
+  root to: 'game#home'
+
   # The priority is based upon order of creation:
   # first created -> highest priority.
 

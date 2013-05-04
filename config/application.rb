@@ -58,5 +58,8 @@ module RainbowJump
 
     # Version of your assets, change this if you want to expire all your assets
     config.assets.version = '1.0'
+
+    # Add flash folder to asset paths
+    config.assets.paths << Rails.root.join("app", "assets", "flash")
   end
 end
