@@ -7,6 +7,7 @@
 	import flash.text.TextFormat;
 	import flash.media.Sound;
 	import flash.media.SoundChannel;
+	import flash.ui.Mouse;
 	
 	public class RainbowGameObject extends MovieClip {
 		// constants
@@ -73,9 +74,14 @@
 		
 		// the current level
 		private var myLevel:Level;
+		
+		// starting mouseX
+		private var startingMouseX:int;
 		/* eof instance variables */
 		
 		public function RainbowGameObject() {
+			Mouse.hide();
+			this.startingMouseX = mouseX;
 			stageWidth = stage.stageWidth;
 			stageHeight = stage.stageHeight;
 			
@@ -174,6 +180,18 @@
 				}
 			}
 			
+			if (mouseX > this.startingMouseX) {
+				dx = 0.3;
+				if (dx > 0.3) {
+					dx = 0.3;
+				}
+			} else if (mouseX < this.startingMouseX) {
+				dx = -0.3;
+				if (dx < -0.3) {
+					dx = -0.3;
+				}
+			}
+			
 			// move hero
 			hero.setX(hero.mx + timeDiff * dx);
 			hero.setY(hero.my + timeDiff * dy);
@@ -206,6 +224,11 @@
 							dy = rainbowList[index].bouncePower;
 						}
 						
+						// check if this is a glass rainbow
+						if (Object(rainbowList[index]).constructor == RainbowGlass) {
+							this.removeRainbow(index);
+						}
+						
 						// play sound effect
 						playSound(theHighThud);
 						
@@ -223,6 +246,15 @@
 		}
 		
 		/**
+		 * Remove a rainbow from screen and garbage collect
+		 */
+		public function removeRainbow(index) {
+			removeChild(this.rainbowList[index]);
+			this.rainbowList[index] = null;
+			this.rainbowList.splice(index, 1);
+		}
+		
+		/**
 		 * Scroll all of the rainbows downward
 		 */
 		public function scrollRainbows(distance:uint) {
@@ -232,9 +264,7 @@
 				
 				// remove a rainbow if it has scrolled beyond visible screen
 				if (rainbowList[index].my <= -1 * stageWidth / 2) {
-					removeChild(rainbowList[index]);
-					rainbowList[index] = null;
-					rainbowList.splice(index, 1);
+					this.removeRainbow(index);
 				}
 			}
 			
@@ -294,6 +324,9 @@
 					} 
 					else if (seed >= myLevel.distribution[1] && seed < myLevel.distribution[2]) {
 						r = new RainbowBoost();
+					}
+					else if (seed >= myLevel.distribution[2] && seed < myLevel.distribution[3]) {
+						r = new RainbowGlass();
 					}
 					else {
 						r = new Rainbow();
@@ -357,6 +390,8 @@
 			}
 			this.removeChild(this.hero);
 			this.hero = null;
+			
+			Mouse.show();
 			
 			MovieClip(root).gameScore = gameScore;
 			MovieClip(root).gameTime = clockTime(gameTime);
