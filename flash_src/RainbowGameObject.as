@@ -16,7 +16,6 @@
 		private static const Gravity:Number = .00058;
 		private static const InitialHeroX:int = -280;
 		private static const InitialHeroY:int = -200;
-		private static const JumpPower:Number = 0.8;
 		
 		/* instance variables */
 		// stage size
@@ -71,6 +70,9 @@
 		
 		// the target winning condition
 		private var target:uint;
+		
+		// the current level
+		private var myLevel:Level;
 		/* eof instance variables */
 		
 		public function RainbowGameObject() {
@@ -78,7 +80,7 @@
 			stageHeight = stage.stageHeight;
 			
 			// get current level
-			var myLevel:Level = new Level(MovieClip(root).level);
+			this.myLevel = new Level(MovieClip(root).level);
 			this.target = myLevel.target;
 			
 			// list of all rainbows
@@ -200,7 +202,9 @@
 						rainbowList[index].startFlip();
 						
 						// bounce up on collision
-						dy = JumpPower;
+						if (rainbowList[index].bouncePower != 0) {
+							dy = rainbowList[index].bouncePower;
+						}
 						
 						// play sound effect
 						playSound(theHighThud);
@@ -279,7 +283,23 @@
 					continue;
 				}
 				
-				var r:Rainbow = new Rainbow();
+				//var r:Rainbow = new Rainbow();
+				var r:Rainbow;
+				if (isInitialization) { // only create normal rainbows during initialization
+					r = new Rainbow();
+				} else { // if not initialization, we can create all types of rainbows
+					var seed:Number = Math.random();
+					if (seed >= myLevel.distribution[0] && seed < myLevel.distribution[1]) {
+						r = new RainbowGray();
+					} 
+					else if (seed >= myLevel.distribution[1] && seed < myLevel.distribution[2]) {
+						r = new RainbowBoost();
+					}
+					else {
+						r = new Rainbow();
+					}
+				}
+				
 				r.mx = x;
 				r.my = y
 				r.x = getStageX(r.mx);

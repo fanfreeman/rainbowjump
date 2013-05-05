@@ -3,8 +3,11 @@
 	import flash.events.*;
 	
 	public dynamic class Rainbow extends MovieClip {
+		public var bouncePower:Number = 0.8;
 		private var flipStep:uint;
 		private var isFlipping:Boolean = false;
+		public var mx:int;
+		public var my:int;
 		
 		// begin the flip
 		public function startFlip() {
