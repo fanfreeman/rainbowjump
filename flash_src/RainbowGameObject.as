@@ -7,7 +7,6 @@
 	import flash.text.TextFormat;
 	import flash.media.Sound;
 	import flash.media.SoundChannel;
-	import flash.ui.Mouse;
 	
 	public class RainbowGameObject extends MovieClip {
 		// constants
@@ -80,7 +79,6 @@
 		/* eof instance variables */
 		
 		public function RainbowGameObject() {
-			Mouse.hide();
 			this.startingMouseX = mouseX;
 			stageWidth = stage.stageWidth;
 			stageHeight = stage.stageHeight;
@@ -181,12 +179,12 @@
 			}
 			
 			if (mouseX > this.startingMouseX) {
-				dx = (mouseX - this.startingMouseX) / 300;
+				dx = (mouseX - this.startingMouseX) / 100;
 				if (dx > 0.5) {
 					dx = 0.5;
 				}
 			} else if (mouseX < this.startingMouseX) {
-				dx = -(this.startingMouseX - mouseX) / 300;
+				dx = -(this.startingMouseX - mouseX) / 100;
 				if (dx < -0.5) {
 					dx = -0.5;
 				}
@@ -358,6 +356,7 @@
 				myFormat.color = 0xFF66CC;
 				this.winNotifyField = new TextField();
 				this.winNotifyField.defaultTextFormat = myFormat;
+				this.winNotifyField.selectable = false;
 				this.winNotifyField.x = 180;
 				this.winNotifyField.y = 240;
 				this.winNotifyField.text = "You Win!";
@@ -390,8 +389,6 @@
 			}
 			this.removeChild(this.hero);
 			this.hero = null;
-			
-			Mouse.show();
 			
 			MovieClip(root).gameScore = gameScore;
 			MovieClip(root).gameTime = clockTime(gameTime);
