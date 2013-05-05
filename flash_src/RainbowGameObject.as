@@ -181,14 +181,14 @@
 			}
 			
 			if (mouseX > this.startingMouseX) {
-				dx = 0.3;
-				if (dx > 0.3) {
-					dx = 0.3;
+				dx = (mouseX - this.startingMouseX) / 300;
+				if (dx > 0.5) {
+					dx = 0.5;
 				}
 			} else if (mouseX < this.startingMouseX) {
-				dx = -0.3;
-				if (dx < -0.3) {
-					dx = -0.3;
+				dx = -(this.startingMouseX - mouseX) / 300;
+				if (dx < -0.5) {
+					dx = -0.5;
 				}
 			}
 			
