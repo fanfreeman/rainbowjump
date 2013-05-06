@@ -10,19 +10,19 @@
 	
 	public class RainbowGameObject extends MovieClip {
 		// constants
+		private static const stageWidth:uint = 760;
+		private static const stageHeight:uint = 600;
 		private static const NumRainbows:uint = 8;
 		private static const RainbowWidth:uint = 60;
 		private static const RainbowHeight:uint = 30;
 		private static const Gravity:Number = .00058;
 		private static const InitialHeroX:int = -280;
 		private static const InitialHeroY:int = -200;
-		private static const RewindLength:uint = 300;
+		private static const RewindLength:uint = 300; // number of frames to rewind
+		private static const MaxHorizontalVelocity:Number = 0.5;
+		private static const ScreenBorder = 100; // the sum of the left and right screen borders
 		
 		/* instance variables */
-		// stage size
-		var stageWidth:uint;
-		var stageHeight:uint;
-		
 		// velocity
 		var dx:Number;
 		var dy:Number;
@@ -100,8 +100,6 @@
 			this.bgmSoundChannel.addEventListener(Event.SOUND_COMPLETE, bgmFinished);
 
 			this.startingMouseX = mouseX;
-			stageWidth = stage.stageWidth;
-			stageHeight = stage.stageHeight;
 			
 			// get current level
 			this.myLevel = new Level(MovieClip(root).level);
@@ -143,6 +141,9 @@
 			addEventListener(Event.ENTER_FRAME, animate);
 		}
 		
+		/**
+		 * Loop the background music
+		 */
 		public function bgmFinished(event:Event) {
 			this.bgmSoundChannel = this.bgmHappy.play();
 			this.bgmSoundChannel.addEventListener(Event.SOUND_COMPLETE, bgmFinished);
@@ -194,7 +195,7 @@
 			
 			if (this.inRewind) { // let's rewind the game
 				if (this.rewindStep < RewindLength) {
-					// restore hero location
+					// restore hero and rainbow locations
 					this.hero.setX(this.history[this.rewindStep].heroX);
 					this.hero.setY(this.history[this.rewindStep].heroY);
 					if (this.history[this.rewindStep].scroll != 0) {
@@ -221,27 +222,27 @@
 				
 				// handle left and right arrow key input
 				if (leftArrow) {
-					dx -= 0.05;
-					if (dx < -0.3) {
-						dx = -0.3;
+					dx -= 0.002 * timeDiff;
+					if (dx < -MaxHorizontalVelocity) {
+						dx = -MaxHorizontalVelocity;
 					}
 				}
 				if (rightArrow) {
-					dx += 0.05;
-					if (dx > 0.3) {
-						dx = 0.3;
+					dx += 0.002 * timeDiff;
+					if (dx > MaxHorizontalVelocity) {
+						dx = MaxHorizontalVelocity;
 					}
 				}
 				
 				if (mouseX > this.startingMouseX) {
-					dx = (mouseX - this.startingMouseX) / 200;
-					if (dx > 0.3) {
-						dx = 0.3;
+					dx = (mouseX - this.startingMouseX) * timeDiff / 4000;
+					if (dx > MaxHorizontalVelocity) {
+						dx = MaxHorizontalVelocity;
 					}
 				} else if (mouseX < this.startingMouseX) {
-					dx = -(this.startingMouseX - mouseX) / 200;
-					if (dx < -0.3) {
-						dx = -0.3;
+					dx = -(this.startingMouseX - mouseX) * timeDiff / 4000;
+					if (dx < -MaxHorizontalVelocity) {
+						dx = -MaxHorizontalVelocity;
 					}
 				}
 				
@@ -275,9 +276,10 @@
 					hero.setY(0);
 				}
 				
-				// check for collision with rainbow when moving downward
-				if (dy < 0 ) {
-					for (var index:String in rainbowList) {
+				// loop through rainbows
+				for (var index:String in rainbowList) {
+					// check for collision with rainbow when moving downward
+					if (dy < 0 ) {
 						if (rainbowList[index].hitTestPoint(hero.x - 20, hero.y + 16, true) ||
 							rainbowList[index].hitTestPoint(hero.x + 20, hero.y + 16, true)) { // we have a bounce
 							// flip rainbow
@@ -301,7 +303,12 @@
 							showGameScore();
 						}
 					}
-				}
+					
+					// move mobile rainbows
+					if (Object(rainbowList[index]).constructor == RainbowMobile) {
+						this.rainbowList[index].updatePosition(timeDiff);
+					}
+				} // eof loop through rainbows
 				
 				// we lose if we fall
 				if (this.checkWinLose && hero.my < -1 * stageHeight / 2) {
@@ -310,11 +317,13 @@
 					} else {
 						this.endLevel(false);
 					}
-					
 				}
 			}
 		}
 		
+		/**
+		 * Begin game rewind
+		 */
 		private function rewind() {
 			this.rewindsAvailable--;
 			this.inRewind = true;
@@ -323,6 +332,9 @@
 			this.pause(1000); // pause for one second
 		}
 		
+		/**
+		 * Pause gameplay for the speicied amount in milliseconds
+		 */
 		private function pause(time:uint) {
 			this.doSimulation = false;
 			var pauseTimer:Timer = new Timer(time, 1);
@@ -330,6 +342,9 @@
 			pauseTimer.start();
 		}
 		
+		/**
+		 * Unpause gameplay
+		 */
 		private function unpause(event:TimerEvent) {
 			this.doSimulation = true;
 		}
@@ -381,7 +396,7 @@
 			
 			// add rainbows
 			for (var i:uint=0; i<numRainbows; i++) {
-				var x:Number = Math.random() * stageWidth - stageWidth / 2;
+				var x:Number = Math.random() * (stageWidth - ScreenBorder) - (stageWidth - ScreenBorder) / 2;
 				var y:Number = 0;
 				if (isInitialization) {
 					y = Math.random() * stageHeight * 1.5 - stageHeight / 2;
@@ -434,6 +449,9 @@
 			}
 		}
 		
+		/**
+		 * Display a big message on screen
+		 */
 		public function showMessage(message:String) {
 			var myFormat:TextFormat = new TextFormat();
 			myFormat.font = "Arial";
@@ -455,6 +473,9 @@
 			messageTimer.start();
 		}
 		
+		/**
+		 * Hide the big message on screen
+		 */
 		public function hideMessage(event:TimerEvent) {
 			this.removeChild(this.messageField);
 		}
@@ -507,7 +528,7 @@
 		/**
 		 * Convert custom coordinates to Flash stage coordinates
 		 */
-		public function getStageX(x:int) {
+		public static function getStageX(x:int) {
 			if (x < -1 * stageWidth / 2) {
 				x += stageWidth;
 			}
@@ -521,7 +542,7 @@
 		/**
 		 * Convert custom coordinates to Flash stage coordinates
 		 */
-		public function getStageY(y:int) {
+		public static function getStageY(y:int) {
 			return stageHeight / 2 - y;
 		}
 		
