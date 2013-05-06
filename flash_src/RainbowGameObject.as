@@ -16,6 +16,7 @@
 		private static const Gravity:Number = .00058;
 		private static const InitialHeroX:int = -280;
 		private static const InitialHeroY:int = -200;
+		private static const RewindLength:uint = 300;
 		
 		/* instance variables */
 		// stage size
@@ -33,12 +34,12 @@
 		var hero:Hero;
 		
 		// distance scrolled
-		var scrollDist:uint = 0;
+		var scrollDist:Number = 0;
 		
 		// total distance climbed
-		var climbDist:uint = 0;
+		var climbDist:Number = 0;
 		// max distance climbed
-		var maxDist:uint = 0;
+		var maxDist:Number = 0;
 		
 		// keyboard input
 		var leftArrow:Boolean = false;
@@ -63,7 +64,7 @@
 		private var delayTimer:Timer;
 		
 		// text to notify player that they win
-		private var winNotifyField:TextField;
+		private var messageField:TextField;
 		
 		// whether or not to check win/lose condition
 		private var checkWinLose:Boolean = true;
@@ -76,6 +77,17 @@
 		
 		// starting mouseX
 		private var startingMouseX:int;
+		
+		// history store
+		private var history:Array;
+		
+		// denotes whether or not we are rewinding
+		private var inRewind:Boolean = false;
+		private var rewindStep:uint = 0;
+		private var rewindsAvailable:int = 1;
+		
+		// denotes whether or not the simulation should run, we use this to pause the game
+		private var doSimulation:Boolean = true;
 		/* eof instance variables */
 		
 		public function RainbowGameObject() {
@@ -111,6 +123,9 @@
 			addChild(gameTimeField);
 			gameStartTime = getTimer();
 			gameTime = 0;
+			
+			// initialize history
+			this.history = new Array();
 			
 			// initial velocity and time
 			dx = 0.2;
@@ -155,92 +170,155 @@
 		 */
 		function animate(event:Event) {
 			// update time
-			var newTime:uint = getTimer() - gameStartTime;
-			var timeDiff:int = newTime - gameTime;
-			gameTime = newTime;
-			//gameTimeField.text = "Time: " + clockTime(gameTime);
-			gameTimeField.text = "Distance: " + String(Math.floor(maxDist / 10));
+			var newTime:uint = getTimer() - this.gameStartTime;
+			var timeDiff:int = newTime - this.gameTime;
+			this.gameTime = newTime;
+					
+			// don't run simulation if game is paused
+			if (!this.doSimulation) {
+				return;
+			}
 			
-			// adjust vertical speed for gravity
-			dy -= Gravity * timeDiff;
-			
-			// handle left and right arrow key input
-			if (leftArrow) {
-				dx -= 0.05;
-				if (dx < -0.3) {
-					dx = -0.3;
+			if (this.inRewind) { // let's rewind the game
+				if (this.rewindStep < RewindLength) {
+					// restore hero location
+					this.hero.setX(this.history[this.rewindStep].heroX);
+					this.hero.setY(this.history[this.rewindStep].heroY);
+					if (this.history[this.rewindStep].scroll != 0) {
+						this.scrollRainbows(-this.history[this.rewindStep].scroll);
+					}
+					
+					this.rewindStep++;
+				} else { // finish rewinding
+					this.showMessage("Go!!");
+					this.pause(1000); // pause for one second
+					
+					// reset velocities
+					this.dx = 0;
+					this.dy = 0;
+					
+					this.inRewind = false;
 				}
-			}
-			if (rightArrow) {
-				dx += 0.05;
-				if (dx > 0.3) {
-					dx = 0.3;
-				}
-			}
-			
-			if (mouseX > this.startingMouseX) {
-				dx = (mouseX - this.startingMouseX) / 100;
-				if (dx > 0.5) {
-					dx = 0.5;
-				}
-			} else if (mouseX < this.startingMouseX) {
-				dx = -(this.startingMouseX - mouseX) / 100;
-				if (dx < -0.5) {
-					dx = -0.5;
-				}
-			}
-			
-			// move hero
-			hero.setX(hero.mx + timeDiff * dx);
-			hero.setY(hero.my + timeDiff * dy);
-			this.climbDist += timeDiff * dy;
-			if (this.climbDist > this.maxDist) {
-				this.maxDist = this.climbDist;
-			}
-			
-			// check for distance traveled winning condition
-			if (this.checkWinLose && this.maxDist / 10 > this.target) {
-				this.endLevel(true);
-			}
-			
-			// move everything down
-			if (hero.my > 0) {
-				scrollRainbows(hero.my);
-				hero.setY(0);
-			}
-			
-			// check for collision with rainbow when moving downward
-			if (dy < 0 ) {
-				for (var index:String in rainbowList) {
-					if (rainbowList[index].hitTestPoint(hero.x - 20, hero.y + 16, true) ||
-						rainbowList[index].hitTestPoint(hero.x + 20, hero.y + 16, true)) { // we have a bounce
-						// flip rainbow
-						rainbowList[index].startFlip();
-						
-						// bounce up on collision
-						if (rainbowList[index].bouncePower != 0) {
-							dy = rainbowList[index].bouncePower;
-						}
-						
-						// check if this is a glass rainbow
-						if (Object(rainbowList[index]).constructor == RainbowGlass) {
-							this.removeRainbow(index);
-						}
-						
-						// play sound effect
-						playSound(theHighThud);
-						
-						// update score
-						gameScore++;
-						showGameScore();
+			} else { // normal gameplay, not rewinding
+				//gameTimeField.text = "Time: " + clockTime(gameTime);
+				gameTimeField.text = "Distance: " + String(Math.floor(maxDist / 10));
+				
+				// adjust vertical speed for gravity
+				dy -= Gravity * timeDiff;
+				
+				// handle left and right arrow key input
+				if (leftArrow) {
+					dx -= 0.05;
+					if (dx < -0.3) {
+						dx = -0.3;
 					}
 				}
+				if (rightArrow) {
+					dx += 0.05;
+					if (dx > 0.3) {
+						dx = 0.3;
+					}
+				}
+				
+				if (mouseX > this.startingMouseX) {
+					dx = (mouseX - this.startingMouseX) / 100;
+					if (dx > 0.5) {
+						dx = 0.5;
+					}
+				} else if (mouseX < this.startingMouseX) {
+					dx = -(this.startingMouseX - mouseX) / 100;
+					if (dx < -0.5) {
+						dx = -0.5;
+					}
+				}
+				
+				// move hero
+				hero.setX(hero.mx + timeDiff * dx);
+				hero.setY(hero.my + timeDiff * dy);
+				this.climbDist += timeDiff * dy;
+				if (this.climbDist > this.maxDist) {
+					this.maxDist = this.climbDist;
+				}
+				
+				// check for distance traveled winning condition
+				if (this.checkWinLose && this.maxDist / 10 > this.target) {
+					this.endLevel(true);
+				}
+				
+				// store history
+				var gameState:Object = new Object();
+				gameState.heroX = hero.mx;
+				gameState.heroY = hero.my;
+				if (hero.my > 0) {
+					gameState.scroll = hero.my;
+				} else {
+					gameState.scroll = 0;
+				}
+				this.history.unshift(gameState);
+				
+				// move everything down
+				if (hero.my > 0) {
+					scrollRainbows(hero.my);
+					hero.setY(0);
+				}
+				
+				// check for collision with rainbow when moving downward
+				if (dy < 0 ) {
+					for (var index:String in rainbowList) {
+						if (rainbowList[index].hitTestPoint(hero.x - 20, hero.y + 16, true) ||
+							rainbowList[index].hitTestPoint(hero.x + 20, hero.y + 16, true)) { // we have a bounce
+							// flip rainbow
+							rainbowList[index].startFlip();
+							
+							// bounce up on collision
+							if (rainbowList[index].bouncePower != 0) {
+								dy = rainbowList[index].bouncePower;
+							}
+							
+							// check if this is a glass rainbow
+							if (Object(rainbowList[index]).constructor == RainbowGlass) {
+								this.removeRainbow(index);
+							}
+							
+							// play sound effect
+							playSound(theHighThud);
+							
+							// update score
+							gameScore++;
+							showGameScore();
+						}
+					}
+				}
+				
+				// we lose if we fall
+				if (this.checkWinLose && hero.my < -1 * stageHeight / 2) {
+					if (this.rewindsAvailable > 0 && this.history.length > RewindLength) {
+						this.rewind();
+					} else {
+						this.endLevel(false);
+					}
+					
+				}
 			}
-			
-			// we lose if we fall
-			if (this.checkWinLose && hero.my < -1 * stageHeight / 2) {
-				this.endLevel(false);
-			}
+		}
+		
+		private function rewind() {
+			this.rewindsAvailable--;
+			this.inRewind = true;
+			this.rewindStep = 0;
+			this.showMessage("Rewind!");
+			this.pause(1000); // pause for one second
+		}
+		
+		private function pause(time:uint) {
+			this.doSimulation = false;
+			var pauseTimer:Timer = new Timer(time, 1);
+			pauseTimer.addEventListener(TimerEvent.TIMER_COMPLETE, unpause);
+			pauseTimer.start();
+		}
+		
+		private function unpause(event:TimerEvent) {
+			this.doSimulation = true;
 		}
 		
 		/**
@@ -255,14 +333,14 @@
 		/**
 		 * Scroll all of the rainbows downward
 		 */
-		public function scrollRainbows(distance:uint) {
+		public function scrollRainbows(distance:Number) {
 			for (var index:String in rainbowList) {
 				rainbowList[index].my -= distance;
 				rainbowList[index].y = getStageY(rainbowList[index].my);
 				
 				// remove a rainbow if it has scrolled beyond visible screen
 				if (rainbowList[index].my <= -1 * stageWidth / 2) {
-					this.removeRainbow(index);
+					//this.removeRainbow(index);
 				}
 			}
 			
@@ -340,6 +418,31 @@
 			}
 		}
 		
+		public function showMessage(message:String) {
+			var myFormat:TextFormat = new TextFormat();
+			myFormat.font = "Arial";
+			myFormat.size = 96;
+			myFormat.bold = true;
+			myFormat.color = 0xFF66CC;
+			this.messageField = new TextField();
+			this.messageField.defaultTextFormat = myFormat;
+			this.messageField.selectable = false;
+			this.messageField.x = 180;
+			this.messageField.y = 240;
+			this.messageField.text = message;
+			this.messageField.width = 450;
+			this.messageField.height = 300;
+			this.addChild(this.messageField);
+			
+			var messageTimer:Timer = new Timer(2000, 1);
+			messageTimer.addEventListener(TimerEvent.TIMER_COMPLETE, hideMessage);
+			messageTimer.start();
+		}
+		
+		public function hideMessage(event:TimerEvent) {
+			this.removeChild(this.messageField);
+		}
+		
 		/**
 		 * Finish playing the current level
 		 */
@@ -349,20 +452,7 @@
 			
 			if (isVictory) {
 				// add win notify field
-				var myFormat:TextFormat = new TextFormat();
-				myFormat.font = "Arial";
-				myFormat.size = 96;
-				myFormat.bold = true;
-				myFormat.color = 0xFF66CC;
-				this.winNotifyField = new TextField();
-				this.winNotifyField.defaultTextFormat = myFormat;
-				this.winNotifyField.selectable = false;
-				this.winNotifyField.x = 180;
-				this.winNotifyField.y = 240;
-				this.winNotifyField.text = "You Win!";
-				this.winNotifyField.width = 450;
-				this.winNotifyField.height = 300;
-				this.addChild(this.winNotifyField);
+				this.showMessage("You Win!");
 			
 				this.delayTimer = new Timer(3000, 1);
 				this.delayTimer.addEventListener(TimerEvent.TIMER_COMPLETE, endGame);
