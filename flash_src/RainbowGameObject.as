@@ -10,7 +10,7 @@
 	
 	public class RainbowGameObject extends MovieClip {
 		// constants
-		private static const NumRainbows:uint = 10;
+		private static const NumRainbows:uint = 8;
 		private static const RainbowWidth:uint = 60;
 		private static const RainbowHeight:uint = 30;
 		private static const Gravity:Number = .00058;
@@ -88,9 +88,17 @@
 		
 		// denotes whether or not the simulation should run, we use this to pause the game
 		private var doSimulation:Boolean = true;
+		
+		// background music
+		public var bgmHappy:BgmHappy;
+		public var bgmSoundChannel:SoundChannel;
 		/* eof instance variables */
 		
 		public function RainbowGameObject() {
+			this.bgmHappy = new BgmHappy();
+			this.bgmSoundChannel = this.bgmHappy.play();
+			this.bgmSoundChannel.addEventListener(Event.SOUND_COMPLETE, bgmFinished);
+
 			this.startingMouseX = mouseX;
 			stageWidth = stage.stageWidth;
 			stageHeight = stage.stageHeight;
@@ -133,6 +141,11 @@
 			stage.addEventListener(KeyboardEvent.KEY_DOWN, keyPressedDown);
 			stage.addEventListener(KeyboardEvent.KEY_UP, keyPressedUp);
 			addEventListener(Event.ENTER_FRAME, animate);
+		}
+		
+		public function bgmFinished(event:Event) {
+			this.bgmSoundChannel = this.bgmHappy.play();
+			this.bgmSoundChannel.addEventListener(Event.SOUND_COMPLETE, bgmFinished);
 		}
 		
 		/**
@@ -209,24 +222,24 @@
 				// handle left and right arrow key input
 				if (leftArrow) {
 					dx -= 0.05;
-					if (dx < -0.3) {
-						dx = -0.3;
+					if (dx < -0.5) {
+						dx = -0.5;
 					}
 				}
 				if (rightArrow) {
 					dx += 0.05;
-					if (dx > 0.3) {
-						dx = 0.3;
+					if (dx > 0.5) {
+						dx = 0.5;
 					}
 				}
 				
 				if (mouseX > this.startingMouseX) {
-					dx = (mouseX - this.startingMouseX) / 100;
+					dx = (mouseX - this.startingMouseX) / 200;
 					if (dx > 0.5) {
 						dx = 0.5;
 					}
 				} else if (mouseX < this.startingMouseX) {
-					dx = -(this.startingMouseX - mouseX) / 100;
+					dx = -(this.startingMouseX - mouseX) / 200;
 					if (dx < -0.5) {
 						dx = -0.5;
 					}
@@ -404,6 +417,9 @@
 					else if (seed >= myLevel.distribution[2] && seed < myLevel.distribution[3]) {
 						r = new RainbowGlass();
 					}
+					else if (seed >= myLevel.distribution[3] && seed < myLevel.distribution[4]) {
+						r = new RainbowMobile();
+					}
 					else {
 						r = new Rainbow();
 					}
@@ -480,6 +496,9 @@
 			this.removeChild(this.hero);
 			this.hero = null;
 			
+			// stop background music
+			this.bgmSoundChannel.stop();
+
 			MovieClip(root).gameScore = gameScore;
 			MovieClip(root).gameTime = clockTime(gameTime);
 			MovieClip(root).gotoAndStop("gameover");
