@@ -222,26 +222,26 @@
 				// handle left and right arrow key input
 				if (leftArrow) {
 					dx -= 0.05;
-					if (dx < -0.5) {
-						dx = -0.5;
+					if (dx < -0.3) {
+						dx = -0.3;
 					}
 				}
 				if (rightArrow) {
 					dx += 0.05;
-					if (dx > 0.5) {
-						dx = 0.5;
+					if (dx > 0.3) {
+						dx = 0.3;
 					}
 				}
 				
 				if (mouseX > this.startingMouseX) {
 					dx = (mouseX - this.startingMouseX) / 200;
-					if (dx > 0.5) {
-						dx = 0.5;
+					if (dx > 0.3) {
+						dx = 0.3;
 					}
 				} else if (mouseX < this.startingMouseX) {
 					dx = -(this.startingMouseX - mouseX) / 200;
-					if (dx < -0.5) {
-						dx = -0.5;
+					if (dx < -0.3) {
+						dx = -0.3;
 					}
 				}
 				
