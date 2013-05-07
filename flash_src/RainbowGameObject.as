@@ -10,11 +10,11 @@
 	
 	public class RainbowGameObject extends MovieClip {
 		// constants
-		private static const stageWidth:uint = 760;
-		private static const stageHeight:uint = 600;
+		public static const StageWidth:uint = 756;
+		public static const StageHeight:uint = 650;
 		private static const NumRainbows:uint = 8;
-		private static const RainbowWidth:uint = 60;
-		private static const RainbowHeight:uint = 30;
+		private static const SeparationWidth:uint = 60; // minimum x distance between the centers of rainbows
+		private static const SeparationHeight:uint = 30; // minimum y distance between the centers of rainbows
 		private static const Gravity:Number = .00058;
 		private static const InitialHeroX:int = -280;
 		private static const InitialHeroY:int = -200;
@@ -92,9 +92,14 @@
 		// background music
 		public var bgmHappy:BgmHappy;
 		public var bgmSoundChannel:SoundChannel;
+		
+		// animated scrolling background
+		private var bg:Background;
 		/* eof instance variables */
 		
 		public function RainbowGameObject() {
+			this.bg = new Background(this);
+			
 			this.bgmHappy = new BgmHappy();
 			this.bgmSoundChannel = this.bgmHappy.play();
 			this.bgmSoundChannel.addEventListener(Event.SOUND_COMPLETE, bgmFinished);
@@ -112,7 +117,7 @@
 			addRainbows(true);
 			
 			// add hero
-			hero = new Hero(stageWidth, stageHeight);
+			hero = new Hero();
 			hero.setX(InitialHeroX);
 			hero.setY(InitialHeroY);
 			addChild(hero);
@@ -202,6 +207,11 @@
 						this.scrollRainbows(-this.history[this.rewindStep].scroll);
 					}
 					
+					// loop through rainbows to reset their states
+					for (var rindex:String in this.history[this.rewindStep].rainbows) {
+						this.rainbowList[rindex].setX(this.history[this.rewindStep].rainbows[rindex].mx);
+					}
+					
 					this.rewindStep++;
 				} else { // finish rewinding
 					this.showMessage("Go!!");
@@ -214,6 +224,9 @@
 					this.inRewind = false;
 				}
 			} else { // normal gameplay, not rewinding
+				// play background
+				this.bg.play(timeDiff);
+				
 				//gameTimeField.text = "Time: " + clockTime(gameTime);
 				gameTimeField.text = "Distance: " + String(Math.floor(maxDist / 10));
 				
@@ -268,7 +281,8 @@
 				} else {
 					gameState.scroll = 0;
 				}
-				this.history.unshift(gameState);
+				gameState.rainbows = new Array();
+				
 				
 				// move everything down
 				if (hero.my > 0) {
@@ -278,25 +292,21 @@
 				
 				// loop through rainbows
 				for (var index:String in rainbowList) {
+					var rainbowState:Object = new Object();
+					rainbowState.mx = rainbowList[index].mx;
+					rainbowState.my = rainbowList[index].my;
+					gameState.rainbows[index] = rainbowState;
+					
 					// check for collision with rainbow when moving downward
 					if (dy < 0 ) {
-						if (rainbowList[index].hitTestPoint(hero.x - 20, hero.y + 16, true) ||
-							rainbowList[index].hitTestPoint(hero.x + 20, hero.y + 16, true)) { // we have a bounce
-							// flip rainbow
-							rainbowList[index].startFlip();
-							
-							// bounce up on collision
-							if (rainbowList[index].bouncePower != 0) {
-								dy = rainbowList[index].bouncePower;
-							}
+						if (rainbowList[index].testCollision(this.hero)) { // we have a bounce
+							// we have come in contact with this platform
+							rainbowList[index].contact(this);
 							
 							// check if this is a glass rainbow
 							if (Object(rainbowList[index]).constructor == RainbowGlass) {
 								this.removeRainbow(index);
 							}
-							
-							// play sound effect
-							playSound(theHighThud);
 							
 							// update score
 							gameScore++;
@@ -310,8 +320,11 @@
 					}
 				} // eof loop through rainbows
 				
+				// continue storing game history
+				this.history.unshift(gameState);
+				
 				// we lose if we fall
-				if (this.checkWinLose && hero.my < -1 * stageHeight / 2) {
+				if (this.checkWinLose && hero.my < -1 * StageHeight / 2) {
 					if (this.rewindsAvailable > 0 && this.history.length > RewindLength) {
 						this.rewind();
 					} else {
@@ -346,6 +359,8 @@
 		 * Unpause gameplay
 		 */
 		private function unpause(event:TimerEvent) {
+			// reset mouse position after pause
+			this.startingMouseX = mouseX;
 			this.doSimulation = true;
 		}
 		
@@ -354,8 +369,8 @@
 		 */
 		public function removeRainbow(index) {
 			removeChild(this.rainbowList[index]);
-			this.rainbowList[index] = null;
-			this.rainbowList.splice(index, 1);
+			//this.rainbowList[index] = null;
+			//this.rainbowList.splice(index, 1);
 		}
 		
 		/**
@@ -367,15 +382,15 @@
 				rainbowList[index].y = getStageY(rainbowList[index].my);
 				
 				// remove a rainbow if it has scrolled beyond visible screen
-				if (rainbowList[index].my <= -1 * stageWidth / 2) {
+				//if (rainbowList[index].my <= -1 * StageHeight / 2) {
 					//this.removeRainbow(index);
-				}
+				//}
 			}
 			
 			this.scrollDist += distance;
-			if (this.scrollDist >= stageHeight / 2) {
+			if (this.scrollDist >= StageHeight / 2) {
 				this.addRainbows(false);
-				this.scrollDist -= stageHeight / 2;
+				this.scrollDist -= StageHeight / 2;
 			}
 		}
 		
@@ -396,18 +411,18 @@
 			
 			// add rainbows
 			for (var i:uint=0; i<numRainbows; i++) {
-				var x:Number = Math.random() * (stageWidth - ScreenBorder) - (stageWidth - ScreenBorder) / 2;
+				var x:Number = Math.random() * (StageWidth - ScreenBorder) - (StageWidth - ScreenBorder) / 2;
 				var y:Number = 0;
 				if (isInitialization) {
-					y = Math.random() * stageHeight * 1.5 - stageHeight / 2;
+					y = Math.random() * StageHeight * 1.5 - StageHeight / 2;
 				} else {
-					y = Math.random() * stageHeight * 0.5 + stageHeight / 2;
+					y = Math.random() * StageHeight * 0.5 + StageHeight / 2;
 				}
 				
 				// prevent creation of rainbow in existing rainbow location
 				var skip:Boolean = false;
 				for (var existingRainbow:String in rainbowList) {
-					if (Math.abs(rainbowList[existingRainbow].mx - x) < RainbowWidth && Math.abs(rainbowList[existingRainbow].my - y) < RainbowHeight) {
+					if (Math.abs(rainbowList[existingRainbow].mx - x) < SeparationWidth && Math.abs(rainbowList[existingRainbow].my - y) < SeparationHeight) {
 						skip = true;
 						break;
 					}
@@ -418,7 +433,7 @@
 				}
 				
 				//var r:Rainbow = new Rainbow();
-				var r:Rainbow;
+				var r:Platform;
 				if (isInitialization) { // only create normal rainbows during initialization
 					r = new Rainbow();
 				} else { // if not initialization, we can create all types of rainbows
@@ -434,6 +449,9 @@
 					}
 					else if (seed >= myLevel.distribution[3] && seed < myLevel.distribution[4]) {
 						r = new RainbowMobile();
+					}
+					else if (seed >= myLevel.distribution[4] && seed < myLevel.distribution[5]) {
+						r = new Cloud();
 					}
 					else {
 						r = new Rainbow();
@@ -511,7 +529,7 @@
 			}
 			this.removeEventListener(Event.ENTER_FRAME, animate);
 			for (var indexRemove:String in this.rainbowList) {
-				this.removeChild(this.rainbowList[indexRemove]);
+				//this.removeChild(this.rainbowList[indexRemove]); // cannot remove here because glass rainbows are already removed
 				this.rainbowList[indexRemove] = null;
 			}
 			this.removeChild(this.hero);
@@ -529,21 +547,21 @@
 		 * Convert custom coordinates to Flash stage coordinates
 		 */
 		public static function getStageX(x:int) {
-			if (x < -1 * stageWidth / 2) {
-				x += stageWidth;
+			if (x < -1 * StageWidth / 2) {
+				x += StageWidth;
 			}
-			else if (x >= stageWidth / 2) {
-				x -= stageWidth;
+			else if (x >= StageWidth / 2) {
+				x -= StageWidth;
 			}
 			
-			return stageWidth / 2 + x;
+			return StageWidth / 2 + x;
 		}
 		
 		/**
 		 * Convert custom coordinates to Flash stage coordinates
 		 */
 		public static function getStageY(y:int) {
-			return stageHeight / 2 - y;
+			return StageHeight / 2 - y;
 		}
 		
 		/**
@@ -567,8 +585,16 @@
 		 /**
 		  * Play a sound effect
 		  */
-		  public function playSound(soundObject:Object) {
+		  private function playSound(soundObject:Object) {
 			  var channel:SoundChannel = soundObject.play();
+		  }
+		  
+		  public function playHighThud() {
+			  this.playSound(this.theHighThud);
+		  }
+		  
+		  public function playLowThud() {
+			  this.playSound(this.theLowThud);
 		  }
 	}
 }

@@ -1,13 +1,23 @@
 ﻿package  {
-	import flash.display.*;
 	import flash.events.*;
 	
-	public dynamic class Rainbow extends MovieClip {
+	public dynamic class Rainbow extends Platform {
 		public var bouncePower:Number = 0.8;
 		private var flipStep:uint;
 		private var isFlipping:Boolean = false;
-		public var mx:int;
-		public var my:int;
+		
+		public override function contact(rgo:RainbowGameObject) {
+			// flip rainbow
+			this.startFlip();
+			
+			// bounce up on collision
+			if (this.bouncePower != 0) {
+				rgo.dy = this.bouncePower;
+			}
+			
+			// play sound effect
+			rgo.playHighThud();
+		}
 		
 		// begin the flip
 		public function startFlip() {
@@ -31,7 +41,13 @@
 				this.removeEventListener(Event.ENTER_FRAME, flip);
 			}
 		}
-
+		
+		public function testCollision(hero:Hero) {
+			if (this.hitTestPoint(hero.x - 20, hero.y + 16, true) ||
+				this.hitTestPoint(hero.x + 20, hero.y + 16, true)) {
+				return true
+			}
+			return false;
+		}
 	}
-	
 }
