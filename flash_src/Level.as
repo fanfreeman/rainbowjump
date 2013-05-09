@@ -17,7 +17,7 @@
 			switch (level) {
 			case 1:
 				this.isDistance = true;
-				this.target = 2;
+				this.target = 2000;
 				this.numVerticalSections = 6;
 				this.numPerVerticalSection = 3;
 				this.yVariation = true;
