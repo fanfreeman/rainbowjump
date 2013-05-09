@@ -4,6 +4,7 @@
 
 		public function RainbowGlass() {
 			super();
+			this.bouncePower = 0.5;
 		}
 
 	}

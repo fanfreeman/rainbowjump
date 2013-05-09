@@ -1,0 +1,41 @@
+book page 152
+
+==Platforms==
+- normal rainbow
+- fake rainbow
+- boost rainbow
+- glass rainbow
+- mobile rainbow
+fading rainbow
+- normal cloud
+- moving cloud
+wukong cloud
+lightning cloud
+zoo guard cloud
+bounceball
+jetpack
+rocket
+fountain cloud
+bomb
+fan cloud
+
+==Game Modes==
+climb distance
+climb distance with time limit
+gem collection
+gem collection with time limit
+rocket run
+falling level
+
+==Powerups==
+Slow Time
+Boost Power
+Shield
+Freeze
+
+==Permanent Powerups==
+Coin Boost
+Slow Time+
+Boost Power+
+Air Jump+
+Freeze+

@@ -15,19 +15,17 @@
 		public function updatePosition(timeDiff:Number) {
 			if (this.movingRight) {
 				if (this.mx < this.fixedX + MaxPosChange) {
-					this.mx += PosChangeSpeed * timeDiff;
+					this.setX(this.mx + PosChangeSpeed * timeDiff);
 				} else {
 					this.movingRight = false;
 				}
 			} else { // moving left
 				if (this.mx > this.fixedX - MaxPosChange) {
-					this.mx -= PosChangeSpeed * timeDiff;
+					this.setX(this.mx - PosChangeSpeed * timeDiff);
 				} else {
 					this.movingRight = true;
 				}
 			}
-			this.x = RainbowGameObject.getStageX(this.mx);
 		}
-
 	}
 }

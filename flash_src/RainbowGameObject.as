@@ -12,7 +12,6 @@
 		// constants
 		public static const StageWidth:uint = 756;
 		public static const StageHeight:uint = 650;
-		private static const NumRainbows:uint = 8;
 		private static const SeparationWidth:uint = 60; // minimum x distance between the centers of rainbows
 		private static const SeparationHeight:uint = 30; // minimum y distance between the centers of rainbows
 		private static const Gravity:Number = .00058;
@@ -21,6 +20,7 @@
 		private static const RewindLength:uint = 300; // number of frames to rewind
 		private static const MaxHorizontalVelocity:Number = 0.5;
 		private static const ScreenBorder = 100; // the sum of the left and right screen borders
+		private static const SpeedFactor = 1.0;
 		
 		/* instance variables */
 		// velocity
@@ -95,20 +95,28 @@
 		
 		// animated scrolling background
 		private var bg:Background;
+		
+		// number of y-axis screen sections for platforms
+		private var currentVerticalSection:uint;
+		
 		/* eof instance variables */
 		
 		public function RainbowGameObject() {
-			this.bg = new Background(this);
-			
-			this.bgmHappy = new BgmHappy();
-			this.bgmSoundChannel = this.bgmHappy.play();
-			this.bgmSoundChannel.addEventListener(Event.SOUND_COMPLETE, bgmFinished);
-
-			this.startingMouseX = mouseX;
-			
 			// get current level
 			this.myLevel = new Level(MovieClip(root).level);
 			this.target = myLevel.target;
+			this.currentVerticalSection = 0;
+			
+			// create background
+			this.bg = new Background(this, this.target);
+			
+			// start background music
+			this.bgmHappy = new BgmHappy();
+			this.bgmSoundChannel = this.bgmHappy.play();
+			this.bgmSoundChannel.addEventListener(Event.SOUND_COMPLETE, bgmFinished);
+			
+			// set original mouse position
+			this.startingMouseX = mouseX;
 			
 			// list of all rainbows
 			rainbowList = new Array();
@@ -192,6 +200,7 @@
 			var newTime:uint = getTimer() - this.gameStartTime;
 			var timeDiff:int = newTime - this.gameTime;
 			this.gameTime = newTime;
+			timeDiff *= SpeedFactor;
 					
 			// don't run simulation if game is paused
 			if (!this.doSimulation) {
@@ -225,7 +234,7 @@
 				}
 			} else { // normal gameplay, not rewinding
 				// play background
-				this.bg.play(timeDiff);
+				this.bg.play(timeDiff, this.maxDist);
 				
 				//gameTimeField.text = "Time: " + clockTime(gameTime);
 				gameTimeField.text = "Distance: " + String(Math.floor(maxDist / 10));
@@ -292,6 +301,7 @@
 				
 				// loop through rainbows
 				for (var index:String in rainbowList) {
+					// store platform coords in history
 					var rainbowState:Object = new Object();
 					rainbowState.mx = rainbowList[index].mx;
 					rainbowState.my = rainbowList[index].my;
@@ -308,15 +318,34 @@
 								this.removeRainbow(index);
 							}
 							
+							// check if this is a fake rainbow
+							if (Object(rainbowList[index]).constructor == RainbowGray) {
+								this.removeRainbow(index);
+							}
+							
 							// update score
 							gameScore++;
 							showGameScore();
 						}
 					}
 					
-					// move mobile rainbows
-					if (Object(rainbowList[index]).constructor == RainbowMobile) {
+					// move mobile rainbows and clouds
+					if (Object(this.rainbowList[index]).constructor == RainbowMobile ||
+						Object(this.rainbowList[index]).constructor == CloudMobile) {
 						this.rainbowList[index].updatePosition(timeDiff);
+					}
+					
+					// update state of fading platforms
+					if (Object(this.rainbowList[index]).constructor == RainbowFade) {
+						if (this.rainbowList[index].updateState(timeDiff)) {
+							if (this.contains(this.rainbowList[index])) {
+								removeChild(this.rainbowList[index]);
+							}
+						} else {
+							if (!this.contains(this.rainbowList[index])) {
+								addChild(this.rainbowList[index]);
+							}
+						}
 					}
 				} // eof loop through rainbows
 				
@@ -401,70 +430,118 @@
 		 * at the beginning of a new game
 		 */
 		public function addRainbows(isInitialization:Boolean) {
-			// add 1.5 times the rainbows if we are initializing
-			var numRainbows:uint = 0;
+			var x:Number = 0;
+			var y:Number = 0;
+			var yMin:Number;
+			var yMax:Number;
+			var yRange:Number;
+			var yStepRange:Number;
+			var moveDist:Number;
+			var overlap:Boolean; // whether the current coords overlaps an existing platform
+			var existingRainbow:String;
 			if (isInitialization) {
-				numRainbows = NumRainbows * 1.5;
-			} else {
-				numRainbows = NumRainbows * 0.5;
+				yMin = -StageHeight / 2;
+				yMax = StageHeight /2;
+				yRange = yMax - yMin;
+				yStepRange = yRange / this.myLevel.numVerticalSections;
+				moveDist = StageHeight / 2;
+				while (this.currentVerticalSection < this.myLevel.numVerticalSections) {
+					for (var i:uint=0; i<this.myLevel.numPerVerticalSection; i++) {
+						do {
+							overlap = false;
+							x = Math.random() * (StageWidth - ScreenBorder) - (StageWidth - ScreenBorder) / 2
+							if (this.myLevel.yVariation) {
+								y = Math.random() * yStepRange - moveDist;
+							} else {
+								y =yStepRange - moveDist;
+							}
+							// prevent creation of rainbow in existing rainbow location
+							for (existingRainbow in rainbowList) {
+								if (Math.abs(rainbowList[existingRainbow].mx - x) < SeparationWidth && Math.abs(rainbowList[existingRainbow].my - y) < SeparationHeight) {
+									overlap = true;
+								}
+							}
+						} while (overlap);
+						this.addPlatform(x, y, isInitialization);
+					}
+					moveDist -= yStepRange;
+					this.currentVerticalSection++;
+				}
 			}
 			
-			// add rainbows
-			for (var i:uint=0; i<numRainbows; i++) {
-				var x:Number = Math.random() * (StageWidth - ScreenBorder) - (StageWidth - ScreenBorder) / 2;
-				var y:Number = 0;
-				if (isInitialization) {
-					y = Math.random() * StageHeight * 1.5 - StageHeight / 2;
-				} else {
-					y = Math.random() * StageHeight * 0.5 + StageHeight / 2;
+			// only add to the half-size section above visible stage
+			yMin = StageHeight / 2;
+			yMax = StageHeight;
+			yRange = yMax - yMin;
+			yStepRange = yRange / (this.myLevel.numVerticalSections / 2);
+			moveDist = StageHeight / 2;
+			while (this.currentVerticalSection < this.myLevel.numVerticalSections * 1.5) {
+				for (var ii:uint=0; ii<this.myLevel.numPerVerticalSection; ii++) {
+					do {
+						overlap = false;
+						x = Math.random() * (StageWidth - ScreenBorder) - (StageWidth - ScreenBorder) / 2
+						if (this.myLevel.yVariation) {
+							y = Math.random() * yStepRange + moveDist;
+						} else {
+							y = yStepRange + moveDist;
+						}
+						// prevent creation of rainbow in existing rainbow location
+						for (existingRainbow in rainbowList) {
+							if (Math.abs(rainbowList[existingRainbow].mx - x) < SeparationWidth && Math.abs(rainbowList[existingRainbow].my - y) < SeparationHeight) {
+								overlap = true;
+							}
+						}
+					} while (overlap);
+					this.addPlatform(x, y, isInitialization);
 				}
-				
-				// prevent creation of rainbow in existing rainbow location
-				var skip:Boolean = false;
-				for (var existingRainbow:String in rainbowList) {
-					if (Math.abs(rainbowList[existingRainbow].mx - x) < SeparationWidth && Math.abs(rainbowList[existingRainbow].my - y) < SeparationHeight) {
-						skip = true;
-						break;
-					}
-				}
-				if (skip) {
-					i--;
-					continue;
-				}
-				
-				//var r:Rainbow = new Rainbow();
-				var r:Platform;
-				if (isInitialization) { // only create normal rainbows during initialization
-					r = new Rainbow();
-				} else { // if not initialization, we can create all types of rainbows
-					var seed:Number = Math.random();
-					if (seed >= myLevel.distribution[0] && seed < myLevel.distribution[1]) {
-						r = new RainbowGray();
-					} 
-					else if (seed >= myLevel.distribution[1] && seed < myLevel.distribution[2]) {
-						r = new RainbowBoost();
-					}
-					else if (seed >= myLevel.distribution[2] && seed < myLevel.distribution[3]) {
-						r = new RainbowGlass();
-					}
-					else if (seed >= myLevel.distribution[3] && seed < myLevel.distribution[4]) {
-						r = new RainbowMobile();
-					}
-					else if (seed >= myLevel.distribution[4] && seed < myLevel.distribution[5]) {
-						r = new Cloud();
-					}
-					else {
-						r = new Rainbow();
-					}
-				}
-				
-				r.mx = x;
-				r.my = y
-				r.x = getStageX(r.mx);
-				r.y = getStageY(r.my);
-				addChild(r);
-				rainbowList.push(r);
+				moveDist += yStepRange;
+				this.currentVerticalSection++;
 			}
+			this.currentVerticalSection = this.myLevel.numVerticalSections;
+		}
+		
+		/**
+		 * Add one platform to the platform list
+		 *
+		 * @param x y the custom coordinates of the platform
+		 * @isInitialization if set to true, only create normal platforms
+		 */
+		private function addPlatform(x:Number, y:Number, isInitialization:Boolean) {
+			var r:Platform;
+			if (isInitialization) { // only create normal rainbows during initialization
+				r = new Rainbow();
+			} else { // if not initialization, we can create all types of rainbows
+				var seed:Number = Math.random();
+				if (seed >= myLevel.distribution[0] && seed < myLevel.distribution[1]) {
+					r = new RainbowGray();
+				} 
+				else if (seed >= myLevel.distribution[1] && seed < myLevel.distribution[2]) {
+					r = new RainbowBoost();
+				}
+				else if (seed >= myLevel.distribution[2] && seed < myLevel.distribution[3]) {
+					r = new RainbowGlass();
+				}
+				else if (seed >= myLevel.distribution[3] && seed < myLevel.distribution[4]) {
+					r = new RainbowMobile();
+				}
+				else if (seed >= myLevel.distribution[4] && seed < myLevel.distribution[5]) {
+					r = new Cloud();
+				}
+				else if (seed >= myLevel.distribution[5] && seed < myLevel.distribution[6]) {
+					r = new CloudMobile();
+				}
+				else if (seed >= myLevel.distribution[6] && seed < myLevel.distribution[7]) {
+					r = new RainbowFade();
+				}
+				else {
+					r = new Rainbow();
+				}
+			}
+			
+			r.setX(x);
+			r.setY(y);
+			this.addChild(r);
+			this.rainbowList.push(r);
 		}
 		
 		/**
@@ -476,14 +553,13 @@
 			myFormat.size = 96;
 			myFormat.bold = true;
 			myFormat.color = 0xFF66CC;
+			myFormat.align = "center";
 			this.messageField = new TextField();
 			this.messageField.defaultTextFormat = myFormat;
 			this.messageField.selectable = false;
-			this.messageField.x = 180;
 			this.messageField.y = 240;
 			this.messageField.text = message;
-			this.messageField.width = 450;
-			this.messageField.height = 300;
+			this.messageField.width = StageWidth;
 			this.addChild(this.messageField);
 			
 			var messageTimer:Timer = new Timer(2000, 1);
