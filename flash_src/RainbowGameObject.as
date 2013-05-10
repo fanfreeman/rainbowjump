@@ -7,6 +7,9 @@
 	import flash.text.TextFormat;
 	import flash.media.Sound;
 	import flash.media.SoundChannel;
+	import flash.net.navigateToURL;
+	import flash.net.URLLoader;
+    import flash.net.URLRequest;
 	
 	public class RainbowGameObject extends MovieClip {
 		// constants
@@ -23,6 +26,10 @@
 		private static const SpeedFactor = 1.0;
 		
 		/* instance variables */
+		// config xml file
+		private var configXMLPath:String;
+		private var appEnv:String;
+		
 		// velocity
 		var dx:Number;
 		var dy:Number;
@@ -97,10 +104,43 @@
 		
 		// number of y-axis screen sections for platforms
 		private var currentVerticalSection:uint;
-		
 		/* eof instance variables */
 		
 		public function RainbowGameObject() {
+			// load configuration file
+			this.configXMLPath = "config.xml";
+			var configRequest:URLRequest = new URLRequest();
+			configRequest.url = this.configXMLPath;
+			var assetLoader:URLLoader = new URLLoader();
+			assetLoader.addEventListener(Event.COMPLETE, ParseConfigXML);
+			assetLoader.load(configRequest);
+		}
+		
+		private function ParseConfigXML(e:Event):void {
+			var configXML:XML = new XML(e.target.data);
+			this.appEnv = configXML.environment;
+			// check for swf theft
+			if (this.appEnv == "dev") {
+				if (this.root.loaderInfo.url.indexOf("file:///C|/Sites/rainbow%5Fjump/flash%5Fsrc/rainbow.swf") == -1) {
+					trace("bad dev environment");
+					return;
+				}
+			} else if (this.appEnv == "prod") {
+				if (this.root.loaderInfo.url.indexOf("rainbowjump.herokuapp.com") == -1) {
+					trace("bad prod environment");
+					navigateToURL( new URLRequest("http://rainbowjump.herokuapp.com"), "_self");
+					return;
+				}
+			} else {
+				trace("config file error");
+				navigateToURL( new URLRequest("http://rainbowjump.herokuapp.com"), "_self");
+				return;
+			}
+			
+			this.initialize();
+		}
+		
+		private function initialize() {
 			// get current level
 			this.myLevel = new Level(MovieClip(root).level);
 			this.target = myLevel.target;
@@ -118,36 +158,36 @@
 			this.startingMouseX = mouseX;
 			
 			// list of all rainbows
-			rainbowList = new Array();
+			this.rainbowList = new Array();
 			
 			// add all rainbows
-			addRainbows(true);
+			this.addRainbows(true);
 			
 			// add hero
-			hero = new Hero();
-			hero.setX(InitialHeroX);
-			hero.setY(InitialHeroY);
-			addChild(hero);
+			this.hero = new Hero();
+			this.hero.setX(InitialHeroX);
+			this.hero.setY(InitialHeroY);
+			addChild(this.hero);
 			
 			// add score field
-			gameScoreField = new TextField();
-			addChild(gameScoreField);
-			gameScore = 0;
-			showGameScore();
+			this.gameScoreField = new TextField();
+			addChild(this.gameScoreField);
+			this.gameScore = 0;
+			this.showGameScore();
 			
 			// add time field
-			gameTimeField = new TextField();
-			gameTimeField.x = 660;
-			addChild(gameTimeField);
-			gameStartTime = getTimer();
-			gameTime = 0;
+			this.gameTimeField = new TextField();
+			this.gameTimeField.x = 660;
+			addChild(this.gameTimeField);
+			this.gameStartTime = getTimer();
+			this.gameTime = 0;
 			
 			// initialize history
 			this.history = new Array();
 			
 			// initial velocity and time
-			dx = 0.2;
-			dy = 0.8;
+			this.dx = 0.2;
+			this.dy = 0.8;
 			stage.addEventListener(KeyboardEvent.KEY_DOWN, keyPressedDown);
 			stage.addEventListener(KeyboardEvent.KEY_UP, keyPressedUp);
 			addEventListener(Event.ENTER_FRAME, animate);
