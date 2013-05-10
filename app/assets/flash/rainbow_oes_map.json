@@ -1,0 +1,544 @@
+{
+  "mapping": [
+    {
+      "originalName": "startingMouseX",
+      "newName": "3$"
+    },
+    {
+      "originalName": "MaxHorizontalVelocity",
+      "newName": ";!"
+    },
+    {
+      "originalName": "playerControl",
+      "newName": "!"
+    },
+    {
+      "originalName": "globalLevel",
+      "newName": "0$"
+    },
+    {
+      "originalName": "animate",
+      "newName": "\u003e\""
+    },
+    {
+      "originalName": "checkWinLose",
+      "newName": "\""
+    },
+    {
+      "originalName": "showMessage",
+      "newName": "7"
+    },
+    {
+      "originalName": "Explosion",
+      "newName": "0"
+    },
+    {
+      "originalName": "appEnv",
+      "newName": "\"$"
+    },
+    {
+      "originalName": "getStageY",
+      "newName": "%$"
+    },
+    {
+      "originalName": "getStageX",
+      "newName": "\u0026$"
+    },
+    {
+      "originalName": "startGame",
+      "newName": "`!"
+    },
+    {
+      "originalName": "InstructionsObject_3",
+      "newName": " $"
+    },
+    {
+      "originalName": "PosChangeSpeed",
+      "newName": "0!"
+    },
+    {
+      "originalName": "bgcloud",
+      "newName": "6#"
+    },
+    {
+      "originalName": "myLevel",
+      "newName": "9#"
+    },
+    {
+      "originalName": "showGameScore",
+      "newName": ",\""
+    },
+    {
+      "originalName": "inRewind",
+      "newName": "7\""
+    },
+    {
+      "originalName": "yVariation",
+      "newName": "!$"
+    },
+    {
+      "originalName": "Platform",
+      "newName": "#\""
+    },
+    {
+      "originalName": "showDistance",
+      "newName": "1\""
+    },
+    {
+      "originalName": "rainbowList",
+      "newName": "8"
+    },
+    {
+      "originalName": "bomb_final_9",
+      "newName": ";\""
+    },
+    {
+      "originalName": "gameStartTime",
+      "newName": "@#"
+    },
+    {
+      "originalName": "distribution",
+      "newName": "+"
+    },
+    {
+      "originalName": "RewindLength",
+      "newName": "\u0027#"
+    },
+    {
+      "originalName": "FadeInterval",
+      "newName": "\u0027"
+    },
+    {
+      "originalName": "doSimulation",
+      "newName": "0\""
+    },
+    {
+      "originalName": "rgo",
+      "newName": "#"
+    },
+    {
+      "originalName": "rewindStep",
+      "newName": "]#"
+    },
+    {
+      "originalName": "ParseConfigXML",
+      "newName": "`#"
+    },
+    {
+      "originalName": "playAgain",
+      "newName": "]!"
+    },
+    {
+      "originalName": "landscapeHeight",
+      "newName": "#$"
+    },
+    {
+      "originalName": "unpause",
+      "newName": "`\""
+    },
+    {
+      "originalName": "dx",
+      "newName": "4$"
+    },
+    {
+      "originalName": "Gravity",
+      "newName": "1#"
+    },
+    {
+      "originalName": "dy",
+      "newName": "^"
+    },
+    {
+      "originalName": "SfxExplosion",
+      "newName": "8\""
+    },
+    {
+      "originalName": "showTime",
+      "newName": "\u003c#"
+    },
+    {
+      "originalName": "Background",
+      "newName": "2"
+    },
+    {
+      "originalName": "rewind",
+      "newName": ","
+    },
+    {
+      "originalName": "maxDist",
+      "newName": "\u003e!"
+    },
+    {
+      "originalName": "rewindsAvailable",
+      "newName": "!#"
+    },
+    {
+      "originalName": "configXMLPath",
+      "newName": "-\""
+    },
+    {
+      "originalName": "MainTimeline",
+      "newName": "@"
+    },
+    {
+      "originalName": "ScreenBorder",
+      "newName": "9"
+    },
+    {
+      "originalName": "downArrow",
+      "newName": "\"!"
+    },
+    {
+      "originalName": "CloudWukong",
+      "newName": "["
+    },
+    {
+      "originalName": "Rainbow",
+      "newName": "3\""
+    },
+    {
+      "originalName": "flip",
+      "newName": "]\""
+    },
+    {
+      "originalName": "SpeedFactor",
+      "newName": ";"
+    },
+    {
+      "originalName": "SeparationWidth",
+      "newName": "?!"
+    },
+    {
+      "originalName": "addCloud",
+      "newName": "[\""
+    },
+    {
+      "originalName": "ss4",
+      "newName": "4"
+    },
+    {
+      "originalName": "BgCloud1",
+      "newName": "3#"
+    },
+    {
+      "originalName": "LowThud",
+      "newName": "\u0026"
+    },
+    {
+      "originalName": "history",
+      "newName": "\u003d!"
+    },
+    {
+      "originalName": "showScore",
+      "newName": "%\""
+    },
+    {
+      "originalName": "StageWidth",
+      "newName": "0#"
+    },
+    {
+      "originalName": "isFaded",
+      "newName": "-"
+    },
+    {
+      "originalName": "RainbowBoost",
+      "newName": "\"\""
+    },
+    {
+      "originalName": "currentVerticalSection",
+      "newName": "+#"
+    },
+    {
+      "originalName": "gameScoreField",
+      "newName": " !"
+    },
+    {
+      "originalName": "flipStep",
+      "newName": "4\""
+    },
+    {
+      "originalName": "RainbowFade",
+      "newName": "%"
+    },
+    {
+      "originalName": "endLevel",
+      "newName": "-!"
+    },
+    {
+      "originalName": "bgmSoundChannel",
+      "newName": "^!"
+    },
+    {
+      "originalName": "getNextY",
+      "newName": "4!"
+    },
+    {
+      "originalName": "hideMessage",
+      "newName": "5$"
+    },
+    {
+      "originalName": "messageField",
+      "newName": "\u0027!"
+    },
+    {
+      "originalName": "InitialHeroX",
+      "newName": "#!"
+    },
+    {
+      "originalName": "InitialHeroY",
+      "newName": "6\""
+    },
+    {
+      "originalName": "CloudMobile",
+      "newName": "[#"
+    },
+    {
+      "originalName": "showLevel",
+      "newName": ",!"
+    },
+    {
+      "originalName": "pause",
+      "newName": "3"
+    },
+    {
+      "originalName": "fixedX",
+      "newName": "\u0026\""
+    },
+    {
+      "originalName": "removeRainbow",
+      "newName": "2#"
+    },
+    {
+      "originalName": "StageHeight",
+      "newName": "4#"
+    },
+    {
+      "originalName": "addPlatform",
+      "newName": " \""
+    },
+    {
+      "originalName": "bg",
+      "newName": "3!"
+    },
+    {
+      "originalName": "bgmHappy",
+      "newName": "+$"
+    },
+    {
+      "originalName": "Width",
+      "newName": "%!"
+    },
+    {
+      "originalName": "playButton",
+      "newName": "\u003e#"
+    },
+    {
+      "originalName": "RainbowGlass",
+      "newName": "?#"
+    },
+    {
+      "originalName": "playExplosion",
+      "newName": "-$"
+    },
+    {
+      "originalName": "RainbowGray",
+      "newName": "\u003c\""
+    },
+    {
+      "originalName": "initialize",
+      "newName": "\u003c!"
+    },
+    {
+      "originalName": "startFlip",
+      "newName": "6!"
+    },
+    {
+      "originalName": "isFlipping",
+      "newName": "^\""
+    },
+    {
+      "originalName": "hero",
+      "newName": "\"#"
+    },
+    {
+      "originalName": "Cloud",
+      "newName": "5"
+    },
+    {
+      "originalName": "Landscape1",
+      "newName": "2\""
+    },
+    {
+      "originalName": "scrollDist",
+      "newName": " #"
+    },
+    {
+      "originalName": "upArrow",
+      "newName": "]"
+    },
+    {
+      "originalName": "scrollRainbows",
+      "newName": ",$"
+    },
+    {
+      "originalName": "RainbowGameObject",
+      "newName": "2!"
+    },
+    {
+      "originalName": "numPerVerticalSection",
+      "newName": "?"
+    },
+    {
+      "originalName": "Mine",
+      "newName": "\u0026!"
+    },
+    {
+      "originalName": "playSound",
+      "newName": "7#"
+    },
+    {
+      "originalName": "MaxPosChange",
+      "newName": "-#"
+    },
+    {
+      "originalName": "playLowThud",
+      "newName": "+\""
+    },
+    {
+      "originalName": "movingRight",
+      "newName": "5\""
+    },
+    {
+      "originalName": "playAgainButton",
+      "newName": "8#"
+    },
+    {
+      "originalName": "CloudSpeed",
+      "newName": "\u0027\""
+    },
+    {
+      "originalName": "MatchSound",
+      "newName": ";#"
+    },
+    {
+      "originalName": "playerFail",
+      "newName": "\u0026#"
+    },
+    {
+      "originalName": "clockTime",
+      "newName": "1!"
+    },
+    {
+      "originalName": "cloudTimer",
+      "newName": "9\""
+    },
+    {
+      "originalName": "keyPressedUp",
+      "newName": "5!"
+    },
+    {
+      "originalName": "bgmFinished",
+      "newName": "\u003c"
+    },
+    {
+      "originalName": "leftArrow",
+      "newName": "2$"
+    },
+    {
+      "originalName": "playHighThud",
+      "newName": "8!"
+    },
+    {
+      "originalName": "climbDist",
+      "newName": "+!"
+    },
+    {
+      "originalName": "BgmHappy",
+      "newName": "!!"
+    },
+    {
+      "originalName": "landscape",
+      "newName": "\u003e"
+    },
+    {
+      "originalName": "isDistance",
+      "newName": "[!"
+    },
+    {
+      "originalName": "PreparationObject_2",
+      "newName": "\u003d#"
+    },
+    {
+      "originalName": "gameTimeField",
+      "newName": "5#"
+    },
+    {
+      "originalName": "Hero",
+      "newName": "1"
+    },
+    {
+      "originalName": "endGame",
+      "newName": "9!"
+    },
+    {
+      "originalName": "frame20",
+      "newName": "##"
+    },
+    {
+      "originalName": "climbTarget",
+      "newName": "@\""
+    },
+    {
+      "originalName": "numVerticalSections",
+      "newName": "!\""
+    },
+    {
+      "originalName": "RainbowMobile",
+      "newName": "`"
+    },
+    {
+      "originalName": "rainbow_fla",
+      "newName": "\u003d\""
+    },
+    {
+      "originalName": "HighThud",
+      "newName": ",#"
+    },
+    {
+      "originalName": "rightArrow",
+      "newName": "6"
+    },
+    {
+      "originalName": "bouncePower",
+      "newName": "%#"
+    },
+    {
+      "originalName": "addRainbows",
+      "newName": "7!"
+    },
+    {
+      "originalName": "fadeCounter",
+      "newName": "\u0027$"
+    },
+    {
+      "originalName": "SeparationHeight",
+      "newName": "1$"
+    },
+    {
+      "originalName": "delayTimer",
+      "newName": "@!"
+    },
+    {
+      "originalName": "keyPressedDown",
+      "newName": "?\""
+    },
+    {
+      "originalName": "setY",
+      "newName": "^#"
+    },
+    {
+      "originalName": "Level",
+      "newName": "\u003d"
+    }
+  ]
+}
