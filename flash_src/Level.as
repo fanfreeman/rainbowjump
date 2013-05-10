@@ -23,7 +23,7 @@
 				this.yVariation = true;
 				// distribution means:
 				// normal, gray, boost, glass, mobile rainbow, cloud, mobile cloud, fading rainbow, mine
-				this.distribution = new Array(0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 1.0);
+				this.distribution = new Array(0.1, 0.2, 0.4, 0.55, 0.65, 0.75, 0.85, 0.95, 1.0);
 				break;
 			case 2:
 				this.isDistance = true;
