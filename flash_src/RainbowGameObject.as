@@ -56,10 +56,6 @@
 		private var gameStartTime:uint;
 		private var gameTime:uint;
 		
-		// sound effects
-		var theLowThud:LowThud = new LowThud();
-		var theHighThud:HighThud = new HighThud();
-		
 		// level finished delay timer to allow player to play a bit longer after winning
 		private var delayTimer:Timer;
 		
@@ -68,6 +64,9 @@
 		
 		// whether or not to check win/lose condition
 		private var checkWinLose:Boolean = true;
+		
+		// whether or not the player has control of the hero
+		private var playerControl:Boolean = true;
 		
 		// the target winning condition
 		private var target:uint;
@@ -243,28 +242,30 @@
 				dy -= Gravity * timeDiff;
 				
 				// handle left and right arrow key input
-				if (leftArrow) {
-					dx -= 0.002 * timeDiff;
-					if (dx < -MaxHorizontalVelocity) {
-						dx = -MaxHorizontalVelocity;
+				if (this.playerControl) {
+					if (leftArrow) {
+						dx -= 0.002 * timeDiff;
+						if (dx < -MaxHorizontalVelocity) {
+							dx = -MaxHorizontalVelocity;
+						}
 					}
-				}
-				if (rightArrow) {
-					dx += 0.002 * timeDiff;
-					if (dx > MaxHorizontalVelocity) {
-						dx = MaxHorizontalVelocity;
+					if (rightArrow) {
+						dx += 0.002 * timeDiff;
+						if (dx > MaxHorizontalVelocity) {
+							dx = MaxHorizontalVelocity;
+						}
 					}
-				}
-				
-				if (mouseX > this.startingMouseX) {
-					dx = (mouseX - this.startingMouseX) * timeDiff / 4000;
-					if (dx > MaxHorizontalVelocity) {
-						dx = MaxHorizontalVelocity;
-					}
-				} else if (mouseX < this.startingMouseX) {
-					dx = -(this.startingMouseX - mouseX) * timeDiff / 4000;
-					if (dx < -MaxHorizontalVelocity) {
-						dx = -MaxHorizontalVelocity;
+					
+					if (mouseX > this.startingMouseX) {
+						dx = (mouseX - this.startingMouseX) * timeDiff / 4000;
+						if (dx > MaxHorizontalVelocity) {
+							dx = MaxHorizontalVelocity;
+						}
+					} else if (mouseX < this.startingMouseX) {
+						dx = -(this.startingMouseX - mouseX) * timeDiff / 4000;
+						if (dx < -MaxHorizontalVelocity) {
+							dx = -MaxHorizontalVelocity;
+						}
 					}
 				}
 				
@@ -307,8 +308,8 @@
 					rainbowState.my = rainbowList[index].my;
 					gameState.rainbows[index] = rainbowState;
 					
-					// check for collision with rainbow when moving downward
-					if (dy < 0 ) {
+					// check for collision with platforms
+					if (this.playerControl) {
 						if (rainbowList[index].testCollision(this.hero)) { // we have a bounce
 							// we have come in contact with this platform
 							rainbowList[index].contact(this);
@@ -321,6 +322,17 @@
 							// check if this is a fake rainbow
 							if (Object(rainbowList[index]).constructor == RainbowGray) {
 								this.removeRainbow(index);
+							}
+							
+							// check if this is a mine
+							if (Object(rainbowList[index]).constructor == Mine) {
+								var explosion:Explosion = new Explosion();
+								explosion.x = this.hero.x;
+								explosion.y = this.hero.y;
+								this.removeChild(this.rainbowList[index]); // remove mine
+								this.addChild(explosion);
+								this.playExplosion(); // play sound
+								this.playerFail();
 							}
 							
 							// update score
@@ -354,12 +366,20 @@
 				
 				// we lose if we fall
 				if (this.checkWinLose && hero.my < -1 * StageHeight / 2) {
-					if (this.rewindsAvailable > 0 && this.history.length > RewindLength) {
-						this.rewind();
-					} else {
-						this.endLevel(false);
-					}
+					this.playerFail();
+					return;
 				}
+			}
+		}
+		
+		/**
+		 * Player fails, check to see if saves are available
+		 */
+		private function playerFail() {
+			if (this.rewindsAvailable > 0 && this.history.length > RewindLength) {
+				this.rewind();
+			} else {
+				this.endLevel(false);
 			}
 		}
 		
@@ -533,6 +553,9 @@
 				else if (seed >= myLevel.distribution[6] && seed < myLevel.distribution[7]) {
 					r = new RainbowFade();
 				}
+				else if (seed >= myLevel.distribution[7] && seed < myLevel.distribution[8]) {
+					r = new Mine();
+				}
 				else {
 					r = new Rainbow();
 				}
@@ -591,8 +614,16 @@
 				
 				// update level
 				MovieClip(root).level += 1;
-			} else {
-				this.endGame(null);
+			} else { // player loses
+				// revoke player control of hero
+				this.playerControl = false;
+				
+				// add win notify field
+				this.showMessage("You Lose");
+			
+				this.delayTimer = new Timer(3000, 1);
+				this.delayTimer.addEventListener(TimerEvent.TIMER_COMPLETE, endGame);
+				this.delayTimer.start();
 			}
 		}
 		
@@ -666,11 +697,15 @@
 		  }
 		  
 		  public function playHighThud() {
-			  this.playSound(this.theHighThud);
+			  this.playSound(new HighThud());
 		  }
 		  
 		  public function playLowThud() {
-			  this.playSound(this.theLowThud);
+			  this.playSound(new LowThud());
+		  }
+		  
+		  public function playExplosion() {
+			  this.playSound(new SfxExplosion());
 		  }
 	}
 }

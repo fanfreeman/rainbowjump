@@ -7,16 +7,18 @@
 		private var isFlipping:Boolean = false;
 		
 		public override function contact(rgo:RainbowGameObject) {
-			// flip rainbow
-			this.startFlip();
-			
-			// bounce up on collision
-			if (this.bouncePower != 0) {
-				rgo.dy = this.bouncePower;
+			if (rgo.dy < 0) {
+				// flip rainbow
+				this.startFlip();
+				
+				// bounce up on collision
+				if (this.bouncePower != 0) {
+					rgo.dy = this.bouncePower;
+				}
+				
+				// play sound effect
+				rgo.playHighThud();
 			}
-			
-			// play sound effect
-			rgo.playHighThud();
 		}
 		
 		// begin the flip

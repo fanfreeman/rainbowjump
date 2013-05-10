@@ -5,7 +5,9 @@
 		}
 
 		public override function contact(rgo:RainbowGameObject) {
-			rgo.dy = 0;
+			if (rgo.dy < 0) {
+				rgo.dy = 0;
+			}
 		}
 		
 		public function testCollision(hero:Hero) {
