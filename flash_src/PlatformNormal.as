@@ -2,7 +2,7 @@
 	import flash.events.*;
 	
 	public dynamic class PlatformNormal extends GameObject {
-		public var bouncePower:Number = 1.0;
+		public var bouncePower:Number = 1.5;
 		private var flipStep:uint;
 		private var isFlipping:Boolean = false;
 		

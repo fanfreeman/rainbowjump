@@ -61,6 +61,10 @@
 			this.playSound(new SfxBoom());
 		}
 		
+		public function playBoing() {
+			this.playSound(new SfxBoing());
+		}
+		
 		///////////////////////////////////////////
 		// PRIVATE
 		/**

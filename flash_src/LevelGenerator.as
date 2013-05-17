@@ -9,28 +9,56 @@
 		
 		private var level:Level;
 		
-		public function LevelGenerator(level:Level, type:uint, yMin:Number, yMax:Number) {
+		public function LevelGenerator(level:Level, type:uint, yMin:int, yMax:int, unitHeight:Number) {
 			this.level = level;
 			var elementDistribution:Array;
 			var elementsPerRowDistribution:Array;
+			var sizeDistribution:Array;
 			switch(type) {
 				// random generation
-				case 1:
-					// normal, gray, boost, glass, mobile rainbow, cloud, mobile cloud, fading rainbow, mine, coin, dot
-					elementDistribution = new Array(1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0);
-					// 1 per row, 2 per row, 3 per row, etc.
+				case 1: // 1 size 5 normal platform per row
+					// 1 per row, 2 per row, 3 per row, 4 per row, 5 per row
 					elementsPerRowDistribution = new Array(1.0, 1.0, 1.0, 1.0, 1.0);
-					this.generateRandom(yMin, yMax, 150, false, true, elementDistribution, elementsPerRowDistribution);
+					// normal, drop, mobile, trampoline, power trampoline, cannon, power cannon
+					elementDistribution = new Array(1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0);
+					// size 1, 2, 3, 4, 5
+					sizeDistribution = new Array(0.0, 0.0, 0.0, 0.5, 1.0)
+					this.generateRandom(yMin, yMax, unitHeight, false, true, elementDistribution, elementsPerRowDistribution, sizeDistribution);
 					break;
-				case 2:
-					elementDistribution = new Array(0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0);
-					elementsPerRowDistribution = new Array(0.0, 0.0, 0.0, 0.0, 1.0);
-					this.generateRandom(yMin, yMax, 100, false, false, elementDistribution, elementsPerRowDistribution);
+				case 2: // [1] size [4-5] [normal, drop] platforms per row
+					elementsPerRowDistribution = new Array(1.0, 1.0, 1.0, 1.0, 1.0);
+					elementDistribution = new Array(0.5, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0);
+					sizeDistribution = new Array(0.0, 0.0, 0.0, 0.5, 1.0)
+					this.generateRandom(yMin, yMax, unitHeight, false, true, elementDistribution, elementsPerRowDistribution, sizeDistribution);
+					break;
+				case 3: // [1] size [3-5] [normal, drop, mobile, trampoline]
+					elementsPerRowDistribution = new Array(1.0, 1.0, 1.0, 1.0, 1.0);
+					elementDistribution = new Array(0.3, 0.6, 0.9, 1.0, 1.0, 1.0, 1.0);
+					sizeDistribution = new Array(0.0, 0.0, 0.3, 1.0, 1.0)
+					this.generateRandom(yMin, yMax, unitHeight, false, true, elementDistribution, elementsPerRowDistribution, sizeDistribution);
+					break;
+				case 4: // [1] size [3-4] [normal, drop, mobile, trampoline, power trampoline, cannon]
+					elementsPerRowDistribution = new Array(1.0, 1.0, 1.0, 1.0, 1.0);
+					elementDistribution = new Array(0.2, 0.5, 0.8, 0.9, 0.98, 1.0, 1.0);
+					sizeDistribution = new Array(0.0, 0.0, 0.5, 1.0, 1.0)
+					this.generateRandom(yMin, yMax, unitHeight, false, true, elementDistribution, elementsPerRowDistribution, sizeDistribution);
+					break;
+				case 5: // [1] size [2-4] [normal, drop, mobile, trampoline, power trampoline, cannon]
+					elementsPerRowDistribution = new Array(1.0, 1.0, 1.0, 1.0, 1.0);
+					elementDistribution = new Array(0.1, 0.4, 0.8, 0.9, 0.98, 1.0, 1.0);
+					sizeDistribution = new Array(0.0, 0.4, 0.8, 1.0, 1.0)
+					this.generateRandom(yMin, yMax, unitHeight, false, true, elementDistribution, elementsPerRowDistribution, sizeDistribution);
+					break;
+				case 6: // [1] size [1-3] [normal, drop, mobile, trampoline, power trampoline, cannon]
+					elementsPerRowDistribution = new Array(1.0, 1.0, 1.0, 1.0, 1.0);
+					elementDistribution = new Array(0.1, 0.4, 0.85, 0.95, 0.98, 1.0, 1.0);
+					sizeDistribution = new Array(0.4, 0.9, 1.0, 1.0, 1.0)
+					this.generateRandom(yMin, yMax, unitHeight, false, true, elementDistribution, elementsPerRowDistribution, sizeDistribution);
 					break;
 				
 				// designed patterns
 				case Dots3PerRow100RowSpace:
-					this.generateDots3PerRow100RowSpace(yMin, yMax);
+					this.generateDots3PerRow100RowSpace(yMin, yMax, unitHeight);
 					break;
 				default:
 					break;
@@ -38,14 +66,17 @@
 		}
 		
 		// generate random segment according to specifications
-		private function generateRandom(yMin:Number, yMax:Number, rowHeight:Number, yVariation:Boolean, xVariation:Boolean, elementDistribution:Array, elementsPerRowDistribution:Array) {
+		private function generateRandom(yMin:Number, yMax:Number, unitHeight:Number, yVariation:Boolean,
+										xVariation:Boolean, elementDistribution:Array,
+										elementsPerRowDistribution:Array, sizeDistribution:Array) {
 			var x:Number = 0;
 			var y:Number = 0;
-			var currentY:Number = yMin;
+			var rowHeight:Number = unitHeight * 3;
+			var currentY:Number = yMin * unitHeight;
 			var overlap:Boolean; // whether the current coords overlaps an existing platform
 			
-			while (currentY <= yMax) {
-				var numElementsPerRow:uint = this.getNumElementsPerRow(elementsPerRowDistribution);
+			while (currentY <= yMax * unitHeight) {
+				var numElementsPerRow:uint = this.getNumElementsPerRowByDistribution(elementsPerRowDistribution);
 				for (var i:uint = 0;  i < numElementsPerRow; i++) {
 					do {
 						overlap = false;
@@ -68,18 +99,22 @@
 							}
 						}
 					} while (overlap);
-					this.level.addElement(y, x, this.getElementClassByDistribution(elementDistribution));
+					
+					var elementClass:String = this.getElementClassByDistribution(elementDistribution);
+					var elementSize:String = "";
+					if ([Level.PlatformNormal, Level.PlatformDrop, Level.PlatformMobile, Level.Trampoline].indexOf(elementClass) != -1) {
+						elementSize = String(this.getElementSizeByDistribution(sizeDistribution));
+					}
+					this.level.addElement(y, x, elementClass + elementSize);
+					this.level.addElement(y + unitHeight, x, Level.Coin);
 				}
 				currentY += rowHeight;
 			}
 		}
 		
 		// obtain a number of elements per row for random generation according to distribution
-		private function getNumElementsPerRow(elementsPerRowDistribution:Array):uint {
+		private function getNumElementsPerRowByDistribution(elementsPerRowDistribution:Array):uint {
 			var seed:Number = Math.random();
-			if (seed < elementsPerRowDistribution[0]) {
-				return 1;
-			}
 			if (seed >= elementsPerRowDistribution[0] && seed < elementsPerRowDistribution[1]) {
 				return 2;
 			} 
@@ -99,53 +134,55 @@
 		private function getElementClassByDistribution(elementDistribution:Array):String {
 			var seed:Number = Math.random();
 			if (seed >= elementDistribution[0] && seed < elementDistribution[1]) {
-				//r = new RainbowGray();
-				return Level.PlatformNormal;
+				return Level.PlatformDrop;
 			} 
 			else if (seed >= elementDistribution[1] && seed < elementDistribution[2]) {
-				//r = new RainbowBoost();
-				return Level.PlatformNormal;
+				return Level.PlatformMobile;
 			}
 			else if (seed >= elementDistribution[2] && seed < elementDistribution[3]) {
-				return Level.PlatformDrop;
+				return Level.Trampoline;
 			}
 			else if (seed >= elementDistribution[3] && seed < elementDistribution[4]) {
-				return Level.PlatformMobile;
+				return Level.PowerTrampoline;
 			}
 			else if (seed >= elementDistribution[4] && seed < elementDistribution[5]) {
 				//r = new Cloud();
-				return Level.PlatformNormal;
+				return Level.Cannon;
 			}
 			else if (seed >= elementDistribution[5] && seed < elementDistribution[6]) {
 				//r = new CloudMobile();
-				return Level.PlatformNormal;
-			}
-			else if (seed >= elementDistribution[6] && seed < elementDistribution[7]) {
-				//r = new RainbowFade();
-				return Level.PlatformNormal;
-			}
-			else if (seed >= elementDistribution[7] && seed < elementDistribution[8]) {
-				//r = new Mine();
-				return Level.PlatformNormal;
-			}
-			else if (seed >= elementDistribution[8] && seed < elementDistribution[9]) {
-				return Level.Coin;
-			}
-			else if (seed >= elementDistribution[9] && seed < elementDistribution[10]) {
-				return Level.AntigravDot;
+				return Level.PowerCannon;
 			}
 			return Level.PlatformNormal;
 		}
 		
+		private function getElementSizeByDistribution(sizeDistribution:Array):uint {
+			var seed:Number = Math.random();
+			if (seed >= sizeDistribution[0] && seed < sizeDistribution[1]) {
+				return 2;
+			} 
+			else if (seed >= sizeDistribution[1] && seed < sizeDistribution[2]) {
+				return 3;
+			}
+			else if (seed >= sizeDistribution[2] && seed < sizeDistribution[3]) {
+				return 4;
+			}
+			else if (seed >= sizeDistribution[3] && seed < sizeDistribution[4]) {
+				return 5;
+			}
+			return 1;
+		}
+		
 		/********** Designed Patterns **********/
 		
-		private function generateDots3PerRow100RowSpace(yMin:Number, yMax:Number) {
-			var currentY:Number = yMin;
-			while (currentY <= yMax) {
+		private function generateDots3PerRow100RowSpace(yMin:Number, yMax:Number, unitHeight:Number) {
+			var rowHeight:Number = unitHeight * 3;
+			var currentY:Number = yMin * unitHeight;
+			while (currentY <= yMax * unitHeight) {
 				this.level.addElement(currentY, -100, Level.AntigravDot);
 				this.level.addElement(currentY, 0, Level.AntigravDot);
 				this.level.addElement(currentY, 100, Level.AntigravDot);
-				currentY += 100;
+				currentY += unitHeight;
 			}
 		}
 	}

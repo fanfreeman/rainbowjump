@@ -1,51 +1,104 @@
 ﻿package  {
 	
 	public dynamic class Level1 {
-		private static const D = 50;
+		private static const D:Number = 100;
+		public var unitHeight:Number = 100;
+		
+		public function getContents2():Array {
+			var stageContents:Array = new Array();
+			
+			
+			
+			return stageContents;
+		}
 		
 		public function getContents():Array {
 			var stageContents:Array = new Array();
 			
-			//							 y				x				element class
-			stageContents.push(new Array(0, 			0, 				Level.PlatformMobile, 5));
-			stageContents.push(new Array(D*3, 			-100, 			Level.PlatformMobile, 5));
-			stageContents.push(new Array(D*5, 			-100, 			Level.Coin));
-			stageContents.push(new Array(D*6, 			100, 			Level.PlatformMobile, 5));
-			stageContents.push(new Array(D*8, 			100, 			Level.Coin));
-			stageContents.push(new Array(D*9, 			-100, 			Level.PlatformMobile, 5));
-			stageContents.push(new Array(D*11, 			-100, 			Level.Coin));
-			stageContents.push(new Array(D*12, 			100, 			Level.PlatformMobile, 5));
-			stageContents.push(new Array(D*14, 			100, 			Level.Coin));
-			stageContents.push(new Array(D*15,			-100, 			Level.PlatformMobile, 5));
-			stageContents.push(new Array(D*17, 			-100, 			Level.Coin));
-			stageContents.push(new Array(D*18, 			100, 			Level.PlatformMobile, 5));
-			stageContents.push(new Array(D*20, 			100, 			Level.Coin));
-			stageContents.push(new Array(D*21, 			-100, 			Level.PlatformMobile, 5));
-			stageContents.push(new Array(D*23, 			-100,			Level.Coin));
+			//							 +y				x				element class
+			stageContents.push(new Array(3, 			-250, 			Level.PlatformNormal, 5));
+			stageContents.push(new Array(3, 			-250, 			Level.PlatformNormal, 5));
+			stageContents.push(new Array(3, 			-250, 			Level.PlatformNormal, 5));
+			stageContents.push(new Array(3, 			-250, 			Level.PlatformNormal, 5));
+			stageContents.push(new Array(3, 			-250, 			Level.PlatformNormal, 5));
+			stageContents.push(new Array(3, 			-250, 			Level.PlatformNormal, 5));
 			
-			stageContents.push(new Array(D*24, 			100, 			Level.PlatformMobile, 4));
-			stageContents.push(new Array(D*27, 			100, 			Level.PlatformMobile, 3));
-			stageContents.push(new Array(D*30, 			100, 			Level.PlatformMobile, 2));
-			stageContents.push(new Array(D*33, 			100, 			Level.PlatformMobile, 1));
+			stageContents.push(new Array(3, 			-100, 			Level.PlatformNormal, 5));
+			stageContents.push(new Array(3, 			100, 			Level.PlatformNormal, 5));
+			stageContents.push(new Array(3, 			-100, 			Level.PlatformNormal, 5));
+			stageContents.push(new Array(3, 			100, 			Level.PlatformNormal, 5));
+			stageContents.push(new Array(3, 			-200, 			Level.PlatformNormal, 5));
+			stageContents.push(new Array(3, 			0, 				Level.PlatformNormal, 5));
+			stageContents.push(new Array(3, 			-200, 			Level.PlatformNormal, 5));
+			stageContents.push(new Array(3, 			0, 				Level.PlatformNormal, 5));
+			stageContents.push(new Array(3, 			-100, 			Level.PlatformNormal, 5));
+			stageContents.push(new Array(3, 			200, 			Level.PlatformNormal, 5));
+			stageContents.push(new Array(3, 			-100, 			Level.PlatformNormal, 5));
+			stageContents.push(new Array(3, 			200, 			Level.PlatformNormal, 5));
+			stageContents.push(new Array(3, 			-200, 			Level.PlatformNormal, 5));
+			stageContents.push(new Array(3, 			200, 			Level.PlatformNormal, 5));
+			stageContents.push(new Array(3, 			-200, 			Level.PlatformNormal, 5));
+			stageContents.push(new Array(3, 			200, 			Level.PlatformNormal, 5));
+			stageContents.push(new Array(3, 			-200, 			Level.PlatformNormal, 5));
+			stageContents.push(new Array(3, 			200, 			Level.PlatformNormal, 5));
+			stageContents.push(new Array(3, 			-200, 			Level.PlatformNormal, 5));
+			stageContents.push(new Array(3, 			200, 			Level.PlatformNormal, 5));
 			
-			stageContents.push(new Array(D*36, 			-100, 			Level.PlatformNormal, 5));
-			stageContents.push(new Array(D*39, 			-100, 			Level.PlatformNormal, 5));
-			stageContents.push(new Array(D*42, 			-100, 			Level.PlatformNormal, 5));
-			stageContents.push(new Array(D*45, 			-100, 			Level.PlatformNormal, 5));
-			stageContents.push(new Array(D*48, 			-100, 			Level.PlatformNormal, 5));
-			stageContents.push(new Array(D*51, 			-100, 			Level.PlatformNormal, 5));
-			stageContents.push(new Array(D*54, 			-100, 			Level.PlatformNormal, 5));
-			stageContents.push(new Array(D*57, 			-100, 			Level.PlatformNormal, 5));
-			stageContents.push(new Array(D*60, 			-100, 			Level.PlatformNormal, 5));
-			stageContents.push(new Array(D*63, 			-100, 			Level.PlatformNormal, 5));
-			stageContents.push(new Array(D*66, 			-100, 			Level.PlatformNormal, 5));
-			stageContents.push(new Array(D*69, 			-100, 			Level.PlatformNormal, 5));
-			stageContents.push(new Array(D*72, 			-100, 			Level.PlatformNormal, 5));
-			stageContents.push(new Array(D*75, 			-100, 			Level.PlatformNormal, 5));
-			stageContents.push(new Array(D*78, 			-100, 			Level.PlatformNormal, 5));
-			stageContents.push(new Array(D*81, 			-100, 			Level.PlatformNormal, 5));
-			stageContents.push(new Array(D*84, 			-100, 			Level.PlatformNormal, 5));
-			stageContents.push(new Array(D*87, 			-100, 			Level.PlatformNormal, 5));
+			stageContents.push(new Array(3, 			270, 			Level.PlatformNormal, 5));
+			stageContents.push(new Array(1, 			270, 			Level.Coin));
+			stageContents.push(new Array(1, 			270, 			Level.Coin));
+			stageContents.push(new Array(1, 			90, 			Level.PlatformNormal, 5));
+			stageContents.push(new Array(1, 			90, 			Level.Coin));
+			stageContents.push(new Array(1, 			90, 			Level.Coin));
+			stageContents.push(new Array(1, 			-90, 			Level.PlatformNormal, 5));
+			stageContents.push(new Array(1, 			-90, 			Level.Coin));
+			stageContents.push(new Array(1, 			-90, 			Level.Coin));
+			stageContents.push(new Array(1, 			-270, 			Level.PlatformNormal, 5));
+			stageContents.push(new Array(1, 			-270, 			Level.Coin));
+			stageContents.push(new Array(1, 			-270, 			Level.Coin));
+			stageContents.push(new Array(1, 			-90, 			Level.PlatformNormal, 5));
+			stageContents.push(new Array(1, 			-90, 			Level.Coin));
+			stageContents.push(new Array(1, 			-90, 			Level.Coin));
+			stageContents.push(new Array(1, 			90, 			Level.PlatformNormal, 5));
+			stageContents.push(new Array(1, 			90, 			Level.Coin));
+			stageContents.push(new Array(1, 			90, 			Level.Coin));
+			stageContents.push(new Array(1, 			270, 			Level.PlatformNormal, 5));
+			stageContents.push(new Array(1, 			270, 			Level.Coin));
+			stageContents.push(new Array(1, 			270, 			Level.Coin));
+			
+			// generate random type 1, starting from y+1, ending at y+4
+			stageContents.push(new Array(Level.Generator, 1, 1, 61));
+			
+			// generate random type 2
+			// [1] size [4-5] [normal, drop] platforms per row
+			stageContents.push(new Array(Level.Generator, 2, 3, 63));
+			
+			// generate random type 3
+			// [1] size [3-4] [normal, drop, mobile, trampoline]
+			stageContents.push(new Array(Level.Generator, 3, 3, 123));
+			
+			// centered dots
+			stageContents.push(new Array(Level.Generator, LevelGenerator.Dots3PerRow100RowSpace, 3, 33));
+			
+			// generate random type 4
+			// [1] size [3-4] [normal, drop, mobile, trampoline, power trampoline, cannon]
+			stageContents.push(new Array(Level.Generator, 4, 3, 123));
+			
+			// centered dots
+			stageContents.push(new Array(Level.Generator, LevelGenerator.Dots3PerRow100RowSpace, 3, 33));
+			
+			// [1] size [2-4] [normal, drop, mobile, trampoline, power trampoline, cannon]
+			stageContents.push(new Array(Level.Generator, 5, 3, 243));
+			
+			// centered dots
+			stageContents.push(new Array(Level.Generator, LevelGenerator.Dots3PerRow100RowSpace, 3, 33));
+			
+			// [1] size [1-3] [normal, drop, mobile, trampoline, power trampoline, cannon]
+			stageContents.push(new Array(Level.Generator, 6, 3, 243));
+			
+			// centered dots
+			stageContents.push(new Array(Level.Generator, LevelGenerator.Dots3PerRow100RowSpace, 3, 33));
+			
 			return stageContents;
 		} // eof getContents()
 		
@@ -93,7 +146,7 @@
 			stageContents.push(new Array(D*92, 			0, 				Level.Coin));
 			stageContents.push(new Array(D*93, 			0, 				Level.PlatformNormal));
 			
-			stageContents.push(new Array(Level.Generator, LevelGenerator.Dots3PerRow100RowSpace, D*96, D*198));
+			
 		}
 	}
 }

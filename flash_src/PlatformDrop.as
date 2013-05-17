@@ -8,7 +8,6 @@
 		
 		public function PlatformDrop() {
 			super();
-			this.bouncePower = 1.0;
 		}
 		
 		public override function contact(rgo:RainbowGameObject) {

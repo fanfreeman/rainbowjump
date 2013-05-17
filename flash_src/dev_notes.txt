@@ -25,6 +25,7 @@ balloons
 ice cubes
 - coins
 gems
+boulder (bounces off and destroys platforms in its path, combine with many small platforms)
 - antigrav dots
 
 ==Game Modes==

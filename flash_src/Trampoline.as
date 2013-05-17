@@ -3,7 +3,7 @@
 		
 		public function Trampoline() {
 			super();
-			this.bouncePower = 1.5;
+			this.bouncePower = 2.0;
 		}
 		
 		public override function contact(rgo:RainbowGameObject) {

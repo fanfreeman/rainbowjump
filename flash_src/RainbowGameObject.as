@@ -13,12 +13,15 @@
 		// constants
 		public static const StageWidth:uint = 756;
 		public static const StageHeight:uint = 650;
-		private static const Gravity:Number = .00208;
+		private static const Gravity:Number = .00245;
 		private static const InitialHeroX:int = -280;
-		private static const InitialHeroY:int = -200;
+		private static const InitialHeroY:int = -250;
 		private static const MaxHorizontalVelocity:Number = 0.7;
 		private static const PlayerMoveSpeed = 0.004;
 		private static const InitialSofSpeed = 0.2;
+		private static const InitialSofHeight = 0;
+		private static const ScrollDownThreshold = 150;
+		private static const MaxHeroFallVelocity = -1;
 		
 		/* instance variables */
 		// config xml file
@@ -84,7 +87,7 @@
 		
 		// sea of fire height
 		public var seaOfFire:SeaOfFire;
-		private var seaOfFireHeight:Number = -500;
+		private var seaOfFireHeight:Number = InitialSofHeight;
 		private var seaOfFireSpeed:Number = InitialSofSpeed;
 		
 		// sound control
@@ -156,7 +159,7 @@
 			// add sea of fire
 			this.seaOfFire = new SeaOfFire();
 			this.seaOfFire.setX(0);
-			this.seaOfFire.setY(this.seaOfFireHeight);
+			//this.seaOfFire.setY(this.seaOfFireHeight);
 			this.addChild(this.seaOfFire);
 			
 			// add score field
@@ -233,8 +236,11 @@
 			//gameTimeField.text = "Time: " + clockTime(gameTime);
 			gameTimeField.text = "Distance: " + String(Math.floor(maxDist / 10));
 				
-			// adjust vertical speed for gravity
+			// adjust hero vertical speed for gravity
 			dy -= Gravity * timeDiff;
+			if (dy < MaxHeroFallVelocity) {
+				dy = MaxHeroFallVelocity;
+			}
 				
 			// handle left and right arrow key input
 			if (this.playerControl) {
@@ -300,9 +306,9 @@
 			}
 			
 			// move everything up
-			if (this.hero.my < -100) {
-				this.scrollElements(hero.my + 100);
-				this.hero.setY(-100);
+			if (this.hero.my < -ScrollDownThreshold) {
+				this.scrollElements(hero.my + ScrollDownThreshold);
+				this.hero.setY(-ScrollDownThreshold);
 			}
 			
 			// move the sea of fire
@@ -427,6 +433,12 @@
 		
 		private function scrollSeaOfFire(timeDiff:int) {
 			this.seaOfFireHeight += timeDiff * this.seaOfFireSpeed;
+			
+			// adjust sea of fire
+			if ((this.climbDist - this.seaOfFireHeight) > StageHeight) {
+				this.seaOfFireHeight = this.climbDist - StageHeight;
+			}
+			
 			this.seaOfFire.setY(-(this.climbDist - this.seaOfFireHeight - this.hero.my));
 		}
 		

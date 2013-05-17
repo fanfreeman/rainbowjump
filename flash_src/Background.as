@@ -42,6 +42,7 @@
 			this.bgcloud2.setX(-RainbowGameObject.StageWidth / 2 - 500);
 			this.bgcloud2.setY(this.getNextY(true));
 			this.rgo.addChild(this.bgcloud2);
+			this.rgo.setChildIndex(this.bgcloud2, 2);
 			
 			// move sea of fire and hero to front
 			if (this.rgo.hero != null) {

@@ -15,7 +15,7 @@
 		}
 		
 		public function contact(rgo:RainbowGameObject) {
-			rgo.dy = 1.0;
+			rgo.dy = 1.5;
 			
 			// play sound effect
 			rgo.soundControl.playGotCoin();

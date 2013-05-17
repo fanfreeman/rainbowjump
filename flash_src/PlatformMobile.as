@@ -1,9 +1,9 @@
 ﻿package  {
 	public class PlatformMobile extends PlatformNormal {
 		
-		private static const BackAndForth = false;
+		private static const BackAndForth = true;
 		public static const MaxPosChange:Number = 200; // max movement in one direction
-		public static const PosChangeSpeed = 0.3; // speed of movement
+		public static const PosChangeSpeed = 0.15; // speed of movement
 		
 		public var fixedX:int;
 		public var movingRight:Boolean = true;

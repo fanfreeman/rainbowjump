@@ -30,7 +30,7 @@
 			
 			switch (level) {
 			case 1:
-				this.target = 2000;
+				this.target = 20000;
 				break;
 			default:
 				this.level = 1;
@@ -45,14 +45,17 @@
 			var levelClass:Class = getDefinitionByName("Level" + this.level) as Class;
 			var level = new levelClass();
 			var stageContents:Array = level.getContents();
+			var currentY:int = 0;
 			for each (var element:Array in stageContents) {
 				if (element[0] == Generator) {
-					var generator:LevelGenerator = new LevelGenerator(this, element[1], element[2], element[3]);
+					var generator:LevelGenerator = new LevelGenerator(this, element[1], currentY + element[2], currentY + element[3], level.unitHeight);
+					currentY += element[3];
 				} else {
+					currentY += element[0];
 					if (element[3] == undefined) {
-						this.addElement(element[0], element[1], element[2]);
+						this.addElement(currentY * level.unitHeight, element[1], element[2]);
 					} else {
-						this.addElement(element[0], element[1], element[2] + element[3]);
+						this.addElement(currentY * level.unitHeight, element[1], element[2] + element[3]);
 					}
 				}
 			}
