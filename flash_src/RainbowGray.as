@@ -1,5 +1,5 @@
 ﻿package  {
-	public class RainbowGray extends Rainbow {
+	public class RainbowGray extends PlatformNormal {
 		
 		public function RainbowGray() {
 			super();

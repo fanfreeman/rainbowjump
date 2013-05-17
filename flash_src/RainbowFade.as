@@ -1,6 +1,6 @@
 ﻿package  {
 	
-	public class RainbowFade extends Rainbow {
+	public class RainbowFade extends PlatformNormal {
 
 		private static const FadeInterval:uint = 500;
 		

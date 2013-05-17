@@ -1,10 +1,10 @@
 ﻿package  {
-	public class Cloud extends Platform {
+	public class Cloud extends GameObject {
 		
 		public function Cloud() {
 		}
 
-		public override function contact(rgo:RainbowGameObject) {
+		public function contact(rgo:RainbowGameObject) {
 			if (rgo.dy < 0) {
 				rgo.dy = 0;
 			}

@@ -1,102 +1,76 @@
 ﻿package  {
+	import flash.utils.getDefinitionByName;
 	
 	public class Level {
-
-		public var level:uint; // level number
-		public var isDistance:Boolean = false; // this is a climb distance level
+		// stage element definitions
+		public static const PlatformNormal:String = "PlatformNormal";
+		public static const PlatformDrop:String = "PlatformDrop";
+		public static const PlatformMobile:String = "PlatformMobile";
+		public static const Trampoline:String = "Trampoline";
+		public static const PowerTrampoline:String = "PowerTrampoline";
+		public static const Cannon:String = "Cannon";
+		public static const PowerCannon:String = "PowerCannon";
+		public static const Coin:String = "Coin";
+		public static const AntigravDot:String = "AntigravDot";
+		// other constants
+		public static const Generator:String = "Generator"; // randomly generate elements according to specification
+		
+		// instance vars
+		public var rgo:RainbowGameObject;
 		public var target:uint; // climb distance target
-		public var distribution:Array; // platform distribution
-		public var numVerticalSections:uint = 6; // number of rows per screen
-		public var yVariation:Boolean = false; // whether platform y coord is random
-		public var numPerVerticalSection:uint = 3; // number of platforms per row
+		private var level:uint; // level number
+		//public var isDistance:Boolean = false; // this is a climb distance level
+		//public var numVerticalSections:uint = 6; // number of rows per screen
+		//public var yVariation:Boolean = false; // whether platform y coord is random
+		//public var numPerVerticalSection:uint = 3; // number of platforms per row
 		
 		public function Level(level:uint) {
+			this.referenceLevelClasses();
 			this.level = level;
-			
 			
 			switch (level) {
 			case 1:
-				this.isDistance = true;
 				this.target = 2000;
-				this.numVerticalSections = 6;
-				this.numPerVerticalSection = 3;
-				this.yVariation = true;
-				// distribution means:
-				// normal, gray, boost, glass, mobile rainbow, cloud, mobile cloud, fading rainbow, mine
-				this.distribution = new Array(0.1, 0.2, 0.4, 0.55, 0.65, 0.75, 0.85, 0.95, 1.0);
-				break;
-			case 2:
-				this.isDistance = true;
-				this.target = 300;
-				this.distribution = new Array(1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0);
-				break;
-			case 3:
-				this.isDistance = true;
-				this.target = 500;
-				this.numPerVerticalSection = 2;
-				this.distribution = new Array(0.5, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0);
-				break;
-			case 4:
-				this.isDistance = true;
-				this.target = 600;
-				this.numPerVerticalSection = 1;
-				this.distribution = new Array(0.7, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0);
-				break;
-			case 5:
-				this.isDistance = true;
-				this.target = 600;
-				this.numPerVerticalSection = 2;
-				this.distribution = new Array(0.6, 0.8, 0.8, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0);
-				break;
-			case 6:
-				this.isDistance = true;
-				this.target = 1000;
-				this.numVerticalSections = 4;
-				this.numPerVerticalSection = 2;
-				this.distribution = new Array(0.5, 0.7, 0.8, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0);
-				break;
-			case 7:
-				this.isDistance = true;
-				this.target = 1000;
-				this.numVerticalSections = 4;
-				this.numPerVerticalSection = 2;
-				this.distribution = new Array(0.4, 0.6, 0.6, 0.7, 1.0, 1.0, 1.0, 1.0, 1.0);
-				break;
-			case 8:
-				this.isDistance = true;
-				this.target = 1000;
-				this.numVerticalSections = 4;
-				this.numPerVerticalSection = 1;
-				this.distribution = new Array(0.0, 0.0, 0.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0);
-				break;
-			case 9:
-				this.isDistance = true;
-				this.target = 4000;
-				this.numVerticalSections = 4;
-				this.numPerVerticalSection = 2;
-				this.distribution = new Array(0.0, 0.4, 0.6, 0.8, 0.8, 1.0, 1.0, 1.0, 1.0);
-				break;
-			case 10:
-				this.isDistance = true;
-				this.target = 3000;
-				this.numVerticalSections = 4;
-				this.numPerVerticalSection = 2;
-				this.distribution = new Array(0.0, 0.0, 0.0, 0.0, 0.8, 1.0, 1.0, 1.0, 1.0);
-				break;
-			case 11:
-				this.isDistance = true;
-				this.target = 3000;
-				this.numVerticalSections = 4;
-				this.numPerVerticalSection = 2;
-				this.distribution = new Array(0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 0.5, 1.0, 1.0);
 				break;
 			default:
-				this.isDistance = true;
+				this.level = 1;
 				this.target = 99999;
-				this.distribution = new Array(1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0);
 				break;
 			}
 		}
-
+		
+		// parse level definition file
+		public function populateStage(rgo:RainbowGameObject) {
+			this.rgo = rgo;
+			var levelClass:Class = getDefinitionByName("Level" + this.level) as Class;
+			var level = new levelClass();
+			var stageContents:Array = level.getContents();
+			for each (var element:Array in stageContents) {
+				if (element[0] == Generator) {
+					var generator:LevelGenerator = new LevelGenerator(this, element[1], element[2], element[3]);
+				} else {
+					if (element[3] == undefined) {
+						this.addElement(element[0], element[1], element[2]);
+					} else {
+						this.addElement(element[0], element[1], element[2] + element[3]);
+					}
+				}
+			}
+		}
+		
+		// add an element to stage
+		public function addElement(y:Number, x:Number, elementClassName:String) {
+			var elementClass:Class = getDefinitionByName(elementClassName) as Class;
+			var element = new elementClass();
+			element.setX(x);
+			element.setY(y);
+			this.rgo.addChild(element);
+			this.rgo.rainbowList.push(element);
+		}
+		
+		// include listed level files in swf
+		private function referenceLevelClasses() {
+			Level1;
+		}
 	}
 }

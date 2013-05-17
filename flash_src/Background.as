@@ -25,6 +25,7 @@
 			this.landscape.setX(0);
 			this.landscape.setY(-RainbowGameObject.StageHeight / 2);
 			this.rgo.addChild(this.landscape);
+			this.rgo.setChildIndex(this.landscape, 0);
 			
 			this.bgcloud = new BgCloud1();
 			this.bgcloud.setX(-RainbowGameObject.StageWidth / 2 - 500);
@@ -42,8 +43,9 @@
 			this.bgcloud2.setY(this.getNextY(true));
 			this.rgo.addChild(this.bgcloud2);
 			
-			// move hero to front
+			// move sea of fire and hero to front
 			if (this.rgo.hero != null) {
+				this.rgo.setChildIndex(MovieClip(rgo.seaOfFire), rgo.numChildren-1);
 				this.rgo.setChildIndex(MovieClip(rgo.hero), rgo.numChildren-1);
 			}
 			

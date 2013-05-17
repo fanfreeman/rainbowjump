@@ -1,6 +1,6 @@
 ﻿package  {
 	
-	public class BgCloud1 extends Platform {
+	public class BgCloud1 extends GameObject {
 
 		public function BgCloud1() {
 			// constructor code

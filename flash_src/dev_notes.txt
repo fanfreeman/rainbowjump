@@ -1,4 +1,10 @@
-book page 160
+﻿book page 160
+
+==Tasks for today==
+climb distance with time limit
+design level 1
+Powerup: Jetpack (increases bounce distance for set duration)
+SoF rises when struck
 
 ==Platforms==
 - normal rainbow
@@ -10,38 +16,61 @@ book page 160
 - normal cloud
 - moving cloud
 - mine
-lightning cloud
-zoo guard cloud
-bounceball
-jetpack
-rocket
-fan cloud
-coin
-wukong cloud
-fountain cloud
+vertical laser
+horizontal laser
+360 degree bouncy mushroom
+one directional bouncy mushroom
+top and bottom bouncy mushroom
+balloons
+ice cubes
+- coins
+gems
+- antigrav dots
 
 ==Game Modes==
 climb distance
 climb distance with time limit
-gem collection
-gem collection with time limit
-rocket run
-falling level
 
 ==Powerups==
-Slow Time
-Boost Power
+- Double Jump
+Jetpack (increases bounce distance for set duration)
+Rocket (boost up a long distance)
+Coin Magnet
 Shield
-Freeze
+Balloonify
 
 ==Permanent Powerups==
-Coin Boost
-Slow Time+
-Boost Power+
-Air Jump+
-Freeze+
+Coin Multiplier+
+Ability Cooldown-
+Double Jump Power+
+Jetpack Duration+
+Rocket Duration+
+Coin Magnet Duration+
+Shield Duration+
+Balloonify Duration+
+
+==Game Mechanics==
+- Sea of fire
+- Touch dots for boost
+- One special ability with cooldown
+Random special ability item
+break balloons/icecubes within time limit, or SoF rises
+Mobile skywalls
+Shed dots when struck
+SoF rises when struck
+
+==Other==
+- Scripted levels
+- Long scrolling background
+- Scrolling middle layer objects
 
 
+==Recycled==
+lightning cloud
+zoo guard cloud
+fan cloud
+wukong cloud
+fountain cloud
 
 Articles:
 http://flashgameu.com/book_game_demos_2.html#
@@ -58,3 +87,4 @@ http://medialoot.com/item/free-vector-clouds/
 
 Sounds:
 http://soundbible.com/tags-cartoon.html
+

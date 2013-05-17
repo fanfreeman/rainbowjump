@@ -1,6 +1,6 @@
 ﻿package  {
 	
-	public class Mine extends Platform {
+	public class Mine extends GameObject {
 
 		public function Mine() {
 		}
