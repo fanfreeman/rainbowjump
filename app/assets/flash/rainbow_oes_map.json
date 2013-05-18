@@ -1,544 +1,972 @@
 {
   "mapping": [
     {
-      "originalName": "startingMouseX",
-      "newName": "3$"
+      "originalName": "item2",
+      "newName": "\u003d%"
+    },
+    {
+      "originalName": "item1",
+      "newName": "]\u0026"
     },
     {
       "originalName": "MaxHorizontalVelocity",
-      "newName": ";!"
-    },
-    {
-      "originalName": "playerControl",
-      "newName": "!"
-    },
-    {
-      "originalName": "globalLevel",
-      "newName": "0$"
+      "newName": "7%"
     },
     {
       "originalName": "animate",
-      "newName": "\u003e\""
-    },
-    {
-      "originalName": "checkWinLose",
-      "newName": "\""
-    },
-    {
-      "originalName": "showMessage",
-      "newName": "7"
-    },
-    {
-      "originalName": "Explosion",
-      "newName": "0"
-    },
-    {
-      "originalName": "appEnv",
-      "newName": "\"$"
-    },
-    {
-      "originalName": "getStageY",
-      "newName": "%$"
-    },
-    {
-      "originalName": "getStageX",
-      "newName": "\u0026$"
-    },
-    {
-      "originalName": "startGame",
-      "newName": "`!"
-    },
-    {
-      "originalName": "InstructionsObject_3",
-      "newName": " $"
-    },
-    {
-      "originalName": "PosChangeSpeed",
-      "newName": "0!"
-    },
-    {
-      "originalName": "bgcloud",
-      "newName": "6#"
-    },
-    {
-      "originalName": "myLevel",
-      "newName": "9#"
-    },
-    {
-      "originalName": "showGameScore",
-      "newName": ",\""
-    },
-    {
-      "originalName": "inRewind",
-      "newName": "7\""
-    },
-    {
-      "originalName": "yVariation",
-      "newName": "!$"
-    },
-    {
-      "originalName": "Platform",
-      "newName": "#\""
-    },
-    {
-      "originalName": "showDistance",
-      "newName": "1\""
-    },
-    {
-      "originalName": "rainbowList",
-      "newName": "8"
-    },
-    {
-      "originalName": "bomb_final_9",
-      "newName": ";\""
-    },
-    {
-      "originalName": "gameStartTime",
-      "newName": "@#"
-    },
-    {
-      "originalName": "distribution",
-      "newName": "+"
-    },
-    {
-      "originalName": "RewindLength",
-      "newName": "\u0027#"
-    },
-    {
-      "originalName": "FadeInterval",
-      "newName": "\u0027"
-    },
-    {
-      "originalName": "doSimulation",
-      "newName": "0\""
-    },
-    {
-      "originalName": "rgo",
-      "newName": "#"
-    },
-    {
-      "originalName": "rewindStep",
-      "newName": "]#"
-    },
-    {
-      "originalName": "ParseConfigXML",
-      "newName": "`#"
-    },
-    {
-      "originalName": "playAgain",
-      "newName": "]!"
-    },
-    {
-      "originalName": "landscapeHeight",
-      "newName": "#$"
-    },
-    {
-      "originalName": "unpause",
-      "newName": "`\""
-    },
-    {
-      "originalName": "dx",
-      "newName": "4$"
-    },
-    {
-      "originalName": "Gravity",
-      "newName": "1#"
-    },
-    {
-      "originalName": "dy",
-      "newName": "^"
-    },
-    {
-      "originalName": "SfxExplosion",
-      "newName": "8\""
-    },
-    {
-      "originalName": "showTime",
-      "newName": "\u003c#"
-    },
-    {
-      "originalName": "Background",
-      "newName": "2"
-    },
-    {
-      "originalName": "rewind",
-      "newName": ","
-    },
-    {
-      "originalName": "maxDist",
-      "newName": "\u003e!"
-    },
-    {
-      "originalName": "rewindsAvailable",
-      "newName": "!#"
-    },
-    {
-      "originalName": "configXMLPath",
-      "newName": "-\""
-    },
-    {
-      "originalName": "MainTimeline",
-      "newName": "@"
-    },
-    {
-      "originalName": "ScreenBorder",
-      "newName": "9"
-    },
-    {
-      "originalName": "downArrow",
-      "newName": "\"!"
-    },
-    {
-      "originalName": "CloudWukong",
-      "newName": "["
-    },
-    {
-      "originalName": "Rainbow",
-      "newName": "3\""
-    },
-    {
-      "originalName": "flip",
-      "newName": "]\""
-    },
-    {
-      "originalName": "SpeedFactor",
-      "newName": ";"
-    },
-    {
-      "originalName": "SeparationWidth",
       "newName": "?!"
     },
     {
-      "originalName": "addCloud",
-      "newName": "[\""
+      "originalName": "checkWinLose",
+      "newName": "\u003d\u0027"
     },
     {
-      "originalName": "ss4",
-      "newName": "4"
-    },
-    {
-      "originalName": "BgCloud1",
-      "newName": "3#"
-    },
-    {
-      "originalName": "LowThud",
-      "newName": "\u0026"
-    },
-    {
-      "originalName": "history",
-      "newName": "\u003d!"
-    },
-    {
-      "originalName": "showScore",
-      "newName": "%\""
-    },
-    {
-      "originalName": "StageWidth",
-      "newName": "0#"
-    },
-    {
-      "originalName": "isFaded",
-      "newName": "-"
-    },
-    {
-      "originalName": "RainbowBoost",
-      "newName": "\"\""
-    },
-    {
-      "originalName": "currentVerticalSection",
-      "newName": "+#"
-    },
-    {
-      "originalName": "gameScoreField",
-      "newName": " !"
-    },
-    {
-      "originalName": "flipStep",
-      "newName": "4\""
-    },
-    {
-      "originalName": "RainbowFade",
-      "newName": "%"
-    },
-    {
-      "originalName": "endLevel",
-      "newName": "-!"
-    },
-    {
-      "originalName": "bgmSoundChannel",
-      "newName": "^!"
-    },
-    {
-      "originalName": "getNextY",
-      "newName": "4!"
-    },
-    {
-      "originalName": "hideMessage",
-      "newName": "5$"
-    },
-    {
-      "originalName": "messageField",
-      "newName": "\u0027!"
-    },
-    {
-      "originalName": "InitialHeroX",
-      "newName": "#!"
-    },
-    {
-      "originalName": "InitialHeroY",
-      "newName": "6\""
-    },
-    {
-      "originalName": "CloudMobile",
-      "newName": "[#"
-    },
-    {
-      "originalName": "showLevel",
-      "newName": ",!"
-    },
-    {
-      "originalName": "pause",
-      "newName": "3"
-    },
-    {
-      "originalName": "fixedX",
-      "newName": "\u0026\""
-    },
-    {
-      "originalName": "removeRainbow",
-      "newName": "2#"
-    },
-    {
-      "originalName": "StageHeight",
-      "newName": "4#"
-    },
-    {
-      "originalName": "addPlatform",
-      "newName": " \""
-    },
-    {
-      "originalName": "bg",
-      "newName": "3!"
-    },
-    {
-      "originalName": "bgmHappy",
-      "newName": "+$"
-    },
-    {
-      "originalName": "Width",
-      "newName": "%!"
-    },
-    {
-      "originalName": "playButton",
-      "newName": "\u003e#"
-    },
-    {
-      "originalName": "RainbowGlass",
-      "newName": "?#"
-    },
-    {
-      "originalName": "playExplosion",
-      "newName": "-$"
-    },
-    {
-      "originalName": "RainbowGray",
-      "newName": "\u003c\""
-    },
-    {
-      "originalName": "initialize",
-      "newName": "\u003c!"
-    },
-    {
-      "originalName": "startFlip",
+      "originalName": "Explosion",
       "newName": "6!"
     },
     {
-      "originalName": "isFlipping",
+      "originalName": "appEnv",
       "newName": "^\""
     },
     {
-      "originalName": "hero",
+      "originalName": "playBgm",
+      "newName": "!"
+    },
+    {
+      "originalName": "item1Flags",
+      "newName": "8#"
+    },
+    {
+      "originalName": "green2",
+      "newName": "6"
+    },
+    {
+      "originalName": "green1",
+      "newName": "\""
+    },
+    {
+      "originalName": "PosChangeSpeed",
+      "newName": "3#"
+    },
+    {
+      "originalName": "showGameScore",
+      "newName": " !"
+    },
+    {
+      "originalName": "scrollElements",
+      "newName": "[\u0026"
+    },
+    {
+      "originalName": "returnAngleType",
+      "newName": "7\u0026"
+    },
+    {
+      "originalName": "gameStartTime",
+      "newName": "-\u0026"
+    },
+    {
+      "originalName": "stopBgm",
+      "newName": " \u0026"
+    },
+    {
+      "originalName": "upperLimit",
+      "newName": "@$"
+    },
+    {
+      "originalName": "BackAndForth",
+      "newName": "\u003c!"
+    },
+    {
+      "originalName": "_numChildren",
+      "newName": "\u0027#"
+    },
+    {
+      "originalName": "rgo",
+      "newName": "2$"
+    },
+    {
+      "originalName": "landscapeHeight",
+      "newName": "1#"
+    },
+    {
+      "originalName": "unpause",
+      "newName": "\u003d"
+    },
+    {
+      "originalName": "dx",
+      "newName": "4\u0026"
+    },
+    {
+      "originalName": "dy",
       "newName": "\"#"
+    },
+    {
+      "originalName": "SfxBoing",
+      "newName": "\"!"
+    },
+    {
+      "originalName": "rPlus",
+      "newName": ";\""
+    },
+    {
+      "originalName": "addItem",
+      "newName": "6\u0027"
+    },
+    {
+      "originalName": "maxDist",
+      "newName": "\"\""
+    },
+    {
+      "originalName": "removeElement",
+      "newName": "1$"
+    },
+    {
+      "originalName": "configXMLPath",
+      "newName": "0\u0026"
+    },
+    {
+      "originalName": "_returnAngleType",
+      "newName": "-%"
+    },
+    {
+      "originalName": "playBoing",
+      "newName": "%\""
+    },
+    {
+      "originalName": "MainTimeline",
+      "newName": "9\u0027"
+    },
+    {
+      "originalName": "ScreenBorder",
+      "newName": "0"
+    },
+    {
+      "originalName": "clearArrays",
+      "newName": "+$"
+    },
+    {
+      "originalName": "downArrow",
+      "newName": "7!"
+    },
+    {
+      "originalName": "SfxGoal",
+      "newName": "`%"
+    },
+    {
+      "originalName": "g",
+      "newName": ",%"
+    },
+    {
+      "originalName": "SeparationWidth",
+      "newName": "9"
+    },
+    {
+      "originalName": "playGoal",
+      "newName": "\u0026#"
+    },
+    {
+      "originalName": "b",
+      "newName": "\u003e!"
+    },
+    {
+      "originalName": "a",
+      "newName": "8\u0027"
+    },
+    {
+      "originalName": "thisAlpha",
+      "newName": " %"
+    },
+    {
+      "originalName": "n",
+      "newName": "2!"
+    },
+    {
+      "originalName": "BgCloud1",
+      "newName": "#$"
+    },
+    {
+      "originalName": "j",
+      "newName": " +"
+    },
+    {
+      "originalName": "objectCollisionArray",
+      "newName": "\u0027%"
+    },
+    {
+      "originalName": "k",
+      "newName": "\u0026%"
+    },
+    {
+      "originalName": "testCollision",
+      "newName": "!\u0026"
+    },
+    {
+      "originalName": "angle",
+      "newName": "]%"
+    },
+    {
+      "originalName": "speedFactor",
+      "newName": "2\u0027"
+    },
+    {
+      "originalName": "referenceLevelClasses",
+      "newName": "1!"
+    },
+    {
+      "originalName": "r",
+      "newName": "!\""
+    },
+    {
+      "originalName": "StageWidth",
+      "newName": "3$"
+    },
+    {
+      "originalName": "isFaded",
+      "newName": "-$"
+    },
+    {
+      "originalName": "slopeXAvg",
+      "newName": "7#"
+    },
+    {
+      "originalName": "seaOfFire",
+      "newName": "2\u0026"
+    },
+    {
+      "originalName": "item1yDiff",
+      "newName": "1"
+    },
+    {
+      "originalName": "levelElementsArray",
+      "newName": "1%"
+    },
+    {
+      "originalName": "RainbowFade",
+      "newName": ",#"
+    },
+    {
+      "originalName": "item2_isText",
+      "newName": ",\u0027"
+    },
+    {
+      "originalName": "hideMessage",
+      "newName": "3\u0026"
+    },
+    {
+      "originalName": "messageField",
+      "newName": "2%"
+    },
+    {
+      "originalName": "InitialHeroX",
+      "newName": "\u0026"
+    },
+    {
+      "originalName": "InitialHeroY",
+      "newName": "7\u0027"
+    },
+    {
+      "originalName": "CloudMobile",
+      "newName": "\u003e#"
+    },
+    {
+      "originalName": "pause",
+      "newName": "9\""
+    },
+    {
+      "originalName": "fixedX",
+      "newName": "!$"
+    },
+    {
+      "originalName": "playBoom",
+      "newName": "-!"
+    },
+    {
+      "originalName": "columnHeight",
+      "newName": ",!"
+    },
+    {
+      "originalName": "SfxBoom",
+      "newName": "%!"
+    },
+    {
+      "originalName": "bg",
+      "newName": "2"
+    },
+    {
+      "originalName": "returnAngle",
+      "newName": "`\u0026"
+    },
+    {
+      "originalName": "edgePoint",
+      "newName": "6%"
+    },
+    {
+      "originalName": "aPlus",
+      "newName": "9%"
+    },
+    {
+      "originalName": "playButton",
+      "newName": "5\u0027"
+    },
+    {
+      "originalName": "RainbowGray",
+      "newName": "`!"
+    },
+    {
+      "originalName": "initialize",
+      "newName": "+\u0027"
+    },
+    {
+      "originalName": "isFlipping",
+      "newName": "`#"
+    },
+    {
+      "originalName": "bmdResample",
+      "newName": "["
     },
     {
       "originalName": "Cloud",
       "newName": "5"
     },
     {
-      "originalName": "Landscape1",
-      "newName": "2\""
+      "originalName": "init",
+      "newName": "!%"
     },
     {
       "originalName": "scrollDist",
-      "newName": " #"
+      "newName": "4\""
     },
     {
       "originalName": "upArrow",
-      "newName": "]"
-    },
-    {
-      "originalName": "scrollRainbows",
-      "newName": ",$"
+      "newName": " \""
     },
     {
       "originalName": "RainbowGameObject",
-      "newName": "2!"
-    },
-    {
-      "originalName": "numPerVerticalSection",
-      "newName": "?"
+      "newName": "+%"
     },
     {
       "originalName": "Mine",
-      "newName": "\u0026!"
+      "newName": "3\""
     },
     {
       "originalName": "playSound",
-      "newName": "7#"
+      "newName": "-\""
     },
     {
       "originalName": "MaxPosChange",
-      "newName": "-#"
+      "newName": "]!"
     },
     {
-      "originalName": "playLowThud",
-      "newName": "+\""
+      "originalName": "item2Flags",
+      "newName": "\u003e\""
+    },
+    {
+      "originalName": "colorExclusionArray",
+      "newName": "]\""
+    },
+    {
+      "originalName": "isFalling",
+      "newName": ";$"
     },
     {
       "originalName": "movingRight",
-      "newName": "5\""
+      "newName": "^"
     },
     {
-      "originalName": "playAgainButton",
-      "newName": "8#"
-    },
-    {
-      "originalName": "CloudSpeed",
-      "newName": "\u0027\""
-    },
-    {
-      "originalName": "MatchSound",
-      "newName": ";#"
-    },
-    {
-      "originalName": "playerFail",
-      "newName": "\u0026#"
-    },
-    {
-      "originalName": "clockTime",
-      "newName": "1!"
-    },
-    {
-      "originalName": "cloudTimer",
-      "newName": "9\""
-    },
-    {
-      "originalName": "keyPressedUp",
-      "newName": "5!"
-    },
-    {
-      "originalName": "bgmFinished",
-      "newName": "\u003c"
-    },
-    {
-      "originalName": "leftArrow",
-      "newName": "2$"
-    },
-    {
-      "originalName": "playHighThud",
-      "newName": "8!"
-    },
-    {
-      "originalName": "climbDist",
-      "newName": "+!"
-    },
-    {
-      "originalName": "BgmHappy",
-      "newName": "!!"
-    },
-    {
-      "originalName": "landscape",
-      "newName": "\u003e"
-    },
-    {
-      "originalName": "isDistance",
-      "newName": "[!"
-    },
-    {
-      "originalName": "PreparationObject_2",
-      "newName": "\u003d#"
-    },
-    {
-      "originalName": "gameTimeField",
-      "newName": "5#"
-    },
-    {
-      "originalName": "Hero",
-      "newName": "1"
-    },
-    {
-      "originalName": "endGame",
-      "newName": "9!"
-    },
-    {
-      "originalName": "frame20",
+      "originalName": "findCollisions",
       "newName": "##"
     },
     {
+      "originalName": "CloudSpeed",
+      "newName": ","
+    },
+    {
+      "originalName": "InitialSofHeight",
+      "newName": "8\""
+    },
+    {
+      "originalName": "MatchSound",
+      "newName": "9!"
+    },
+    {
+      "originalName": "playerFail",
+      "newName": "!#"
+    },
+    {
+      "originalName": "cloudTimer",
+      "newName": "\"+"
+    },
+    {
+      "originalName": "keyPressedUp",
+      "newName": "5$"
+    },
+    {
+      "originalName": "InitialSofSpeed",
+      "newName": "\u003d!"
+    },
+    {
+      "originalName": "leftArrow",
+      "newName": "\u003c\u0027"
+    },
+    {
+      "originalName": "landscape",
+      "newName": "3"
+    },
+    {
+      "originalName": "scrollSeaOfFire",
+      "newName": "0\""
+    },
+    {
+      "originalName": "PreparationObject_2",
+      "newName": ",\""
+    },
+    {
+      "originalName": "Hero",
+      "newName": "^\u0027"
+    },
+    {
+      "originalName": "touched",
+      "newName": "9#"
+    },
+    {
+      "originalName": "bPlus",
+      "newName": "7$"
+    },
+    {
       "originalName": "climbTarget",
-      "newName": "@\""
+      "newName": "#\""
     },
     {
-      "originalName": "numVerticalSections",
-      "newName": "!\""
+      "originalName": "objectArray",
+      "newName": "5#"
     },
     {
-      "originalName": "RainbowMobile",
-      "newName": "`"
+      "originalName": "swapTarget",
+      "newName": "\"%"
     },
     {
       "originalName": "rainbow_fla",
-      "newName": "\u003d\""
+      "newName": "^\u0026"
     },
     {
-      "originalName": "HighThud",
-      "newName": ",#"
+      "originalName": "SeaOfFire",
+      "newName": "1\""
     },
     {
-      "originalName": "rightArrow",
-      "newName": "6"
+      "originalName": "rowWidth",
+      "newName": "6#"
     },
     {
-      "originalName": "bouncePower",
-      "newName": "%#"
+      "originalName": "SfxScratch",
+      "newName": "9$"
     },
     {
-      "originalName": "addRainbows",
-      "newName": "7!"
+      "originalName": "findAngle",
+      "newName": "%$"
     },
     {
       "originalName": "fadeCounter",
+      "newName": "3\u0027"
+    },
+    {
+      "originalName": "generateDots3PerRow100RowSpace",
+      "newName": "\u003e$"
+    },
+    {
+      "originalName": "aMinus",
+      "newName": "8\u0026"
+    },
+    {
+      "originalName": "startingMouseX",
+      "newName": "\u003c\""
+    },
+    {
+      "originalName": "gPlus",
+      "newName": "\u003e"
+    },
+    {
+      "originalName": "playerControl",
+      "newName": "@\u0026"
+    },
+    {
+      "originalName": "globalLevel",
+      "newName": " #"
+    },
+    {
+      "originalName": "seaOfFireSpeed",
+      "newName": "^!"
+    },
+    {
+      "originalName": "MaxHeroFallVelocity",
+      "newName": "-#"
+    },
+    {
+      "originalName": "showMessage",
+      "newName": "\u003e%"
+    },
+    {
+      "originalName": "generateRandom",
+      "newName": "[\u0027"
+    },
+    {
+      "originalName": "pixelLength",
+      "newName": "0#"
+    },
+    {
+      "originalName": "_alphaThreshold",
+      "newName": "\u0026\u0027"
+    },
+    {
+      "originalName": "center",
+      "newName": "0!"
+    },
+    {
+      "originalName": "getStageY",
+      "newName": "5\""
+    },
+    {
+      "originalName": "getStageX",
+      "newName": "[\""
+    },
+    {
+      "originalName": "startGame",
+      "newName": "%"
+    },
+    {
+      "originalName": "addElement",
+      "newName": "?$"
+    },
+    {
+      "originalName": "blue1",
+      "newName": "%\u0027"
+    },
+    {
+      "originalName": "checkCollisions",
+      "newName": "`"
+    },
+    {
+      "originalName": "InstructionsObject_3",
+      "newName": "7\""
+    },
+    {
+      "originalName": "bgcloud",
+      "newName": "]$"
+    },
+    {
+      "originalName": "blue2",
+      "newName": "\u0026$"
+    },
+    {
+      "originalName": "showDistance",
+      "newName": " $"
+    },
+    {
+      "originalName": "rainbowList",
+      "newName": "\u003d\u0026"
+    },
+    {
+      "originalName": "abilityReady",
+      "newName": "\u003c\u0026"
+    },
+    {
+      "originalName": "item1_isText",
+      "newName": "#!"
+    },
+    {
+      "originalName": "edgeArray",
+      "newName": "\u0027"
+    },
+    {
+      "originalName": "FadeInterval",
+      "newName": "@#"
+    },
+    {
+      "originalName": "doSimulation",
+      "newName": "[$"
+    },
+    {
+      "originalName": "getNumElementsPerRowByDistribution",
+      "newName": "0$"
+    },
+    {
+      "originalName": "ParseConfigXML",
+      "newName": "\u0027\u0026"
+    },
+    {
+      "originalName": "gMinus",
+      "newName": "0\u0027"
+    },
+    {
+      "originalName": "playAgain",
+      "newName": "@\""
+    },
+    {
+      "originalName": "PlayerMoveSpeed",
+      "newName": "^$"
+    },
+    {
+      "originalName": "pixel",
+      "newName": "+\""
+    },
+    {
+      "originalName": "alphaThreshold",
+      "newName": ";\u0026"
+    },
+    {
+      "originalName": "colorObj",
+      "newName": " \u0027"
+    },
+    {
+      "originalName": "soundControl",
+      "newName": "\u0027\u0027"
+    },
+    {
+      "originalName": "SfxExplosion",
+      "newName": "%#"
+    },
+    {
+      "originalName": "showTime",
+      "newName": "?#"
+    },
+    {
+      "originalName": "Background",
+      "newName": "]"
+    },
+    {
+      "originalName": "value1",
+      "newName": "1\u0027"
+    },
+    {
+      "originalName": "bomb_final_17",
+      "newName": "6\""
+    },
+    {
+      "originalName": "value2",
+      "newName": "?%"
+    },
+    {
+      "originalName": "playGotCoin",
+      "newName": "\u003c$"
+    },
+    {
+      "originalName": "removeExcludeColor",
+      "newName": "^%"
+    },
+    {
+      "originalName": "currentObj",
+      "newName": "4"
+    },
+    {
+      "originalName": "flip",
+      "newName": "4#"
+    },
+    {
+      "originalName": "SoundControl",
+      "newName": "2\""
+    },
+    {
+      "originalName": "SfxGotCoin",
+      "newName": "#\u0026"
+    },
+    {
+      "originalName": "addCloud",
+      "newName": "\u0027!"
+    },
+    {
+      "originalName": "ss4",
+      "newName": "[!"
+    },
+    {
+      "originalName": "pixels",
+      "newName": "\"$"
+    },
+    {
+      "originalName": "LowThud",
+      "newName": "\u003c"
+    },
+    {
+      "originalName": "LevelGenerator",
+      "newName": "\u0026!"
+    },
+    {
+      "originalName": "showScore",
+      "newName": "%%"
+    },
+    {
+      "originalName": "RainbowBoost",
+      "newName": "?"
+    },
+    {
+      "originalName": "collisionList",
+      "newName": "\u003c#"
+    },
+    {
+      "originalName": "abilityTimer",
+      "newName": "8%"
+    },
+    {
+      "originalName": "recordedCollision",
+      "newName": "9\u0026"
+    },
+    {
+      "originalName": "gameScoreField",
+      "newName": "4\u0027"
+    },
+    {
+      "originalName": "removeItem",
+      "newName": "4$"
+    },
+    {
+      "originalName": "flipStep",
+      "newName": "7"
+    },
+    {
+      "originalName": "endLevel",
+      "newName": "]#"
+    },
+    {
+      "originalName": "seaOfFireHeight",
+      "newName": "+"
+    },
+    {
+      "originalName": "getNextY",
+      "newName": "[#"
+    },
+    {
+      "originalName": "bgmSoundChannel",
+      "newName": ",$"
+    },
+    {
+      "originalName": "red1",
+      "newName": "4!"
+    },
+    {
+      "originalName": "red2",
+      "newName": "4%"
+    },
+    {
+      "originalName": "showLevel",
+      "newName": "\u0026\""
+    },
+    {
+      "originalName": "_returnAngle",
+      "newName": "+\u0026"
+    },
+    {
+      "originalName": "StageHeight",
+      "newName": "\u003e\u0026"
+    },
+    {
+      "originalName": "bgmHappy",
+      "newName": "%\u0026"
+    },
+    {
+      "originalName": "Width",
+      "newName": "[%"
+    },
+    {
+      "originalName": "colorFlag",
+      "newName": "1\u0026"
+    },
+    {
+      "originalName": "playExplosion",
+      "newName": "8!"
+    },
+    {
+      "originalName": "startFlip",
+      "newName": "+#"
+    },
+    {
+      "originalName": "overlap",
+      "newName": "3%"
+    },
+    {
+      "originalName": "hero",
+      "newName": "@\u0027"
+    },
+    {
+      "originalName": "fallVelocity",
+      "newName": "\u0026\u0026"
+    },
+    {
+      "originalName": "populateStage",
+      "newName": ",\u0026"
+    },
+    {
+      "originalName": "Landscape1",
+      "newName": "@"
+    },
+    {
+      "originalName": "collisionPoint",
+      "newName": "`\""
+    },
+    {
+      "originalName": "objectCheckArray",
+      "newName": "6$"
+    },
+    {
+      "originalName": "slopeYAvg",
+      "newName": "`$"
+    },
+    {
+      "originalName": "hasColors",
+      "newName": "`\u0027"
+    },
+    {
+      "originalName": "playLowThud",
+      "newName": "5\u0026"
+    },
+    {
+      "originalName": "playAgainButton",
+      "newName": "\u003c%"
+    },
+    {
+      "originalName": "getElementClassByDistribution",
+      "newName": "2#"
+    },
+    {
+      "originalName": "Dots3PerRow100RowSpace",
+      "newName": "@%"
+    },
+    {
+      "originalName": "item1xDiff",
+      "newName": "!!"
+    },
+    {
+      "originalName": "GameObject",
+      "newName": ";"
+    },
+    {
+      "originalName": "clockTime",
+      "newName": "-\u0027"
+    },
+    {
+      "originalName": "rMinus",
+      "newName": "#"
+    },
+    {
+      "originalName": "locStage",
+      "newName": "3!"
+    },
+    {
+      "originalName": "playScratch",
+      "newName": "+!"
+    },
+    {
+      "originalName": "CollisionList",
       "newName": "\u0027$"
     },
     {
-      "originalName": "SeparationHeight",
-      "newName": "1$"
-    },
-    {
-      "originalName": "delayTimer",
+      "originalName": "bgmFinished",
       "newName": "@!"
     },
     {
-      "originalName": "keyPressedDown",
-      "newName": "?\""
+      "originalName": "climbDist",
+      "newName": "#\u0027"
     },
     {
-      "originalName": "setY",
+      "originalName": "BgmHappy",
+      "newName": "0%"
+    },
+    {
+      "originalName": "playHighThud",
+      "newName": ";\u0027"
+    },
+    {
+      "originalName": "alpha2",
+      "newName": "]\u0027"
+    },
+    {
+      "originalName": "gameTimeField",
+      "newName": "\u0027\""
+    },
+    {
+      "originalName": "overlapping",
+      "newName": "?\u0026"
+    },
+    {
+      "originalName": "alpha1",
+      "newName": "\u003d#"
+    },
+    {
+      "originalName": "ScrollDownThreshold",
+      "newName": ";%"
+    },
+    {
+      "originalName": "endGame",
+      "newName": "8"
+    },
+    {
+      "originalName": "frame20",
+      "newName": "!+"
+    },
+    {
+      "originalName": "locX",
+      "newName": "\"\u0026"
+    },
+    {
+      "originalName": "locY",
       "newName": "^#"
     },
     {
-      "originalName": "Level",
-      "newName": "\u003d"
+      "originalName": "triggerSpecialAbility",
+      "newName": "\u003d$"
+    },
+    {
+      "originalName": "dispose",
+      "newName": "5%"
+    },
+    {
+      "originalName": "numEdges",
+      "newName": ";#"
+    },
+    {
+      "originalName": "definition",
+      "newName": "5!"
+    },
+    {
+      "originalName": "HighThud",
+      "newName": "!\u0027"
+    },
+    {
+      "originalName": "rightArrow",
+      "newName": "6\u0026"
+    },
+    {
+      "originalName": "setAbilityReady",
+      "newName": "-"
+    },
+    {
+      "originalName": "excludeColor",
+      "newName": "\"\u0027"
+    },
+    {
+      "originalName": "lastAlpha",
+      "newName": "\u003d\""
+    },
+    {
+      "originalName": "SeparationHeight",
+      "newName": "8$"
+    },
+    {
+      "originalName": "delayTimer",
+      "newName": "?\u0027"
+    },
+    {
+      "originalName": "getElementSizeByDistribution",
+      "newName": "?\""
+    },
+    {
+      "originalName": "bMinus",
+      "newName": "#%"
+    },
+    {
+      "originalName": "keyPressedDown",
+      "newName": ";!"
+    },
+    {
+      "originalName": "average",
+      "newName": "\u003e\u0027"
     }
   ]
 }
