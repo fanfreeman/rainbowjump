@@ -2,28 +2,16 @@
 	
 	public class Coin extends GameObject {
 		
-		private var collected:Boolean = false;
-		
-		public function Coin() {
-			// constructor code
-		}
-		
-		public function testCollision(hero:Hero) {
-			if (this.hitTestPoint(hero.x - 20, hero.y + 16, true) ||
-				this.hitTestPoint(hero.x + 20, hero.y + 16, true)) {
-				return true
-			}
-			return false;
-		}
+		private var touched:Boolean = false;
 		
 		public function contact(rgo:RainbowGameObject) {
-			if (!collected) {
+			if (!touched) {
 				// play sound effect
 				rgo.soundControl.playGotCoin();
 				// remove coin
 				this.visible = false;
 				
-				this.collected = true;
+				this.touched = true;
 			}
 		}
 	}

@@ -1,6 +1,8 @@
 ﻿package  {
 	
 	public class AntigravDot extends GameObject {
+		
+		private var touched:Boolean = false;
 
 		public function AntigravDot() {
 			// constructor code
@@ -15,12 +17,15 @@
 		}
 		
 		public function contact(rgo:RainbowGameObject) {
-			rgo.dy = 1.5;
-			
-			// play sound effect
-			rgo.soundControl.playGotCoin();
-			// remove coin
-			rgo.removeChild(this);
+			if (!this.touched) {
+				rgo.dy = rgo.level.definition.trampolineBouncePower;
+				// play sound effect
+				rgo.soundControl.playGotCoin();
+				// remove coin
+				this.visible = false;
+				
+				this.touched = true;
+			}
 		}
 	}
 	

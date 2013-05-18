@@ -8,17 +8,17 @@
 	import flash.net.navigateToURL;
 	import flash.net.URLLoader;
     import flash.net.URLRequest;
+	import com.coreyoneil.collision.CollisionList;
 	
 	public class RainbowGameObject extends MovieClip {
 		// constants
 		public static const StageWidth:uint = 756;
 		public static const StageHeight:uint = 650;
-		private static const Gravity:Number = .00245;
 		private static const InitialHeroX:int = -280;
 		private static const InitialHeroY:int = -250;
-		private static const MaxHorizontalVelocity:Number = 0.7;
-		private static const PlayerMoveSpeed = 0.004;
-		private static const InitialSofSpeed = 0.2;
+		private static const MaxHorizontalVelocity:Number = 0.5;
+		private static const PlayerMoveSpeed = 0.003;
+		private static const InitialSofSpeed = 0.1;
 		private static const InitialSofHeight = 0;
 		private static const ScrollDownThreshold = 150;
 		private static const MaxHeroFallVelocity = -1;
@@ -74,7 +74,7 @@
 		private var playerControl:Boolean = true;
 		
 		// the current level
-		private var level:Level;
+		public var level:Level;
 		
 		// starting mouseX
 		private var startingMouseX:int;
@@ -93,7 +93,11 @@
 		// sound control
 		public var soundControl:SoundControl;
 		
+		// game speed multiplier
 		private var speedFactor:Number = 1.0;
+		
+		// collision list
+		public var collisionList:CollisionList;
 		/* eof instance variables */
 		
 		public function RainbowGameObject() {
@@ -154,7 +158,13 @@
 			this.hero = new Hero(this);
 			this.hero.setX(InitialHeroX);
 			this.hero.setY(InitialHeroY);
+			this.hero.scaleX = 0.6;
+			this.hero.scaleY = 0.6;
 			this.addChild(this.hero);
+			
+			// instantiate collision list with hero as the target
+			this.collisionList = new CollisionList(this.hero);
+			this.collisionList.alphaThreshold = 0;
 			
 			// add sea of fire
 			this.seaOfFire = new SeaOfFire();
@@ -237,7 +247,7 @@
 			gameTimeField.text = "Distance: " + String(Math.floor(maxDist / 10));
 				
 			// adjust hero vertical speed for gravity
-			dy -= Gravity * timeDiff;
+			dy -= this.level.definition.gravity * timeDiff;
 			if (dy < MaxHeroFallVelocity) {
 				dy = MaxHeroFallVelocity;
 			}
@@ -245,12 +255,14 @@
 			// handle left and right arrow key input
 			if (this.playerControl) {
 				if (leftArrow) {
+					if (dx > 0) {dx = 0;}
 					dx -= PlayerMoveSpeed * timeDiff;
 					if (dx < -MaxHorizontalVelocity) {
 						dx = -MaxHorizontalVelocity;
 					}
 				}
 				else if (rightArrow) {
+					if (dx < 0) {dx = 0;}
 					dx += PlayerMoveSpeed * timeDiff;
 					if (dx > MaxHorizontalVelocity) {
 						dx = MaxHorizontalVelocity;
@@ -313,37 +325,51 @@
 			
 			// move the sea of fire
 			this.scrollSeaOfFire(timeDiff);
-				
+			
+			// check for collisions
+			var collisions:Array = this.collisionList.checkCollisions();
+			for(var i = 0; i < collisions.length; i++)
+			{
+				// grab the next collision in the array
+				var collision:Object = collisions[i];
+				//trace(collision.object2.toString());
+				if (collision.object1 is Hero) {
+					collision.object2.contact(this);
+				} else {
+					collision.object1.contact(this);
+				}
+			}
+			
 			// loop through stage elements
 			for (var index:String in rainbowList) {
 				// check for collision with platforms
-				if (this.playerControl) {
-					if (rainbowList[index].testCollision(this.hero)) { // we have a bounce
-						
-						// we have come in contact with this platform
-						rainbowList[index].contact(this);
-						
-						// check if this is a fake platform
-						if (Object(rainbowList[index]).constructor == RainbowGray) {
-							this.removeElement(index);
-						}
-						
-						// check if this is a mine
-						if (Object(rainbowList[index]).constructor == Mine) {
-							var explosion:Explosion = new Explosion();
-							explosion.x = this.hero.x;
-							explosion.y = this.hero.y;
-							this.removeChild(this.rainbowList[index]); // remove mine
-							this.addChild(explosion);
-							this.soundControl.playExplosion(); // play sound
-							this.playerFail();
-						}
-						
-						// update score
-						gameScore++;
-						showGameScore();
-					}
-				}
+//				if (this.playerControl) {
+//					if (rainbowList[index].testCollision(this.hero)) { // we have a bounce
+//						
+//						// we have come in contact with this platform
+//						rainbowList[index].contact(this);
+//						
+//						// check if this is a fake platform
+//						if (Object(rainbowList[index]).constructor == RainbowGray) {
+//							this.removeElement(index);
+//						}
+//						
+//						// check if this is a mine
+//						if (Object(rainbowList[index]).constructor == Mine) {
+//							var explosion:Explosion = new Explosion();
+//							explosion.x = this.hero.x;
+//							explosion.y = this.hero.y;
+//							this.removeChild(this.rainbowList[index]); // remove mine
+//							this.addChild(explosion);
+//							this.soundControl.playExplosion(); // play sound
+//							this.playerFail();
+//						}
+//						
+//						// update score
+//						gameScore++;
+//						showGameScore();
+//					}
+//				}
 				
 				// move mobile platforms, dropping platforms and clouds
 				if (this.rainbowList[index] is PlatformMobile ||
@@ -432,7 +458,7 @@
 
 			// populate area above visible stage with next elements in level elements array
 			var PopulateSpan = StageHeight;
-			while (this.level.levelElementsArray[0][0] < this.climbDist + PopulateSpan) {
+			while (this.level.levelElementsArray.length > 0 && this.level.levelElementsArray[0][0] < this.climbDist + PopulateSpan) {
 				var levelElement:Array = this.level.levelElementsArray[0];
 				this.level.addElement(levelElement[0] - this.climbDist, levelElement[1], levelElement[2]);
 				this.level.levelElementsArray.splice(0, 1);
@@ -477,7 +503,7 @@
 		 * Hide the big message on screen
 		 */
 		public function hideMessage(event:TimerEvent) {
-			this.removeChild(this.messageField);
+			this.messageField.visible = false;
 		}
 		
 		/**
@@ -517,13 +543,19 @@
 			if (event != null) {
 				this.delayTimer.removeEventListener(TimerEvent.TIMER_COMPLETE, endGame);
 			}
+			// remove event listeners
+			stage.removeEventListener(KeyboardEvent.KEY_DOWN, keyPressedDown);
+			stage.removeEventListener(KeyboardEvent.KEY_UP, keyPressedUp);
 			this.removeEventListener(Event.ENTER_FRAME, animate);
+			// clean up objects
 			for (var indexRemove:String in this.rainbowList) {
 				//this.removeChild(this.rainbowList[indexRemove]); // cannot remove here because glass rainbows are already removed
 				this.rainbowList[indexRemove] = null;
 			}
 			this.removeChild(this.hero);
 			this.hero = null;
+			this.removeChild(this.messageField);
+			this.messageField = null;
 			
 			// stop background music
 			this.soundControl.stopBgm();

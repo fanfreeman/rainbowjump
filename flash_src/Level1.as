@@ -1,13 +1,20 @@
 ﻿package  {
 	
 	public dynamic class Level1 {
-		private static const D:Number = 100;
-		public var unitHeight:Number = 100;
+		// level attributes
+		public var unitHeight:Number = 50;
+		public var gravity:Number = .00158;
+		public var normalBouncePower = 0.85;
+		public var trampolineBouncePower = 1.1;
+		public var powerTrampolineBouncePower = 1.3;
+		public var cannonBouncePower = 2.4;
+		
 		
 		public function getContents2():Array {
 			var stageContents:Array = new Array();
 			
-			
+			stageContents.push(new Array(Level.Generator, 6, 3, 243));
+			stageContents.push(new Array(3, 			0, 				Level.Goal));
 			
 			return stageContents;
 		}
@@ -99,54 +106,10 @@
 			// centered dots
 			stageContents.push(new Array(Level.Generator, LevelGenerator.Dots3PerRow100RowSpace, 3, 33));
 			
+			// goal
+			stageContents.push(new Array(3, 			0, 				Level.Goal));
+			
 			return stageContents;
 		} // eof getContents()
-		
-		private function placeholder() {
-			var stageContents:Array = new Array();
-			// dots
-			stageContents.push(new Array(D*24, 			0, 				Level.AntigravDot));
-			stageContents.push(new Array(D*26, 			0, 				Level.AntigravDot));
-			stageContents.push(new Array(D*28, 			0, 				Level.AntigravDot));
-			stageContents.push(new Array(D*30, 			0, 				Level.AntigravDot));
-			stageContents.push(new Array(D*32, 			0, 				Level.AntigravDot));
-			stageContents.push(new Array(D*34, 			0, 				Level.AntigravDot));
-			stageContents.push(new Array(D*36, 			0, 				Level.AntigravDot));
-			stageContents.push(new Array(D*38, 			0, 				Level.AntigravDot));
-			//
-			stageContents.push(new Array(D*41, 			0, 				Level.PlatformNormal));
-			stageContents.push(new Array(D*42, 			0, 				Level.Coin));
-			stageContents.push(new Array(D*43, 			0, 				Level.Coin));
-			stageContents.push(new Array(D*44, 			0, 				Level.PlatformNormal));
-			// 2nd group dots
-			stageContents.push(new Array(D*47, 			0, 				Level.AntigravDot));
-			stageContents.push(new Array(D*47, 			-D*2, 			Level.AntigravDot));
-			stageContents.push(new Array(D*47, 			D*2, 			Level.AntigravDot));
-			stageContents.push(new Array(D*49, 			0, 				Level.AntigravDot));
-			stageContents.push(new Array(D*49, 			-D*2, 			Level.AntigravDot));
-			stageContents.push(new Array(D*49, 			D*2, 			Level.AntigravDot));
-			stageContents.push(new Array(D*51, 			0, 				Level.AntigravDot));
-			stageContents.push(new Array(D*51, 			-D*2, 			Level.AntigravDot));
-			stageContents.push(new Array(D*51, 			D*2, 			Level.AntigravDot));
-			stageContents.push(new Array(D*53, 			0, 				Level.AntigravDot));
-			stageContents.push(new Array(D*53, 			-D*2, 			Level.AntigravDot));
-			stageContents.push(new Array(D*53, 			D*2, 			Level.AntigravDot));
-			stageContents.push(new Array(D*55, 			0, 				Level.AntigravDot));
-			stageContents.push(new Array(D*55, 			-D*2, 			Level.AntigravDot));
-			stageContents.push(new Array(D*55, 			D*2, 			Level.AntigravDot));
-			stageContents.push(new Array(D*57, 			0, 				Level.AntigravDot));
-			stageContents.push(new Array(D*57, 			-D*2, 			Level.AntigravDot));
-			stageContents.push(new Array(D*57, 			D*2, 			Level.AntigravDot));
-			
-			// generate random: type 1, starting from height D*60, ending at D*86, inclusive
-			stageContents.push(new Array(Level.Generator, 1, D*60, D*87));
-			
-			stageContents.push(new Array(D*90, 			0, 				Level.PlatformNormal));
-			stageContents.push(new Array(D*91, 			0, 				Level.Coin));
-			stageContents.push(new Array(D*92, 			0, 				Level.Coin));
-			stageContents.push(new Array(D*93, 			0, 				Level.PlatformNormal));
-			
-			
-		}
 	}
 }

@@ -12,13 +12,7 @@
 		
 		public override function contact(rgo:RainbowGameObject) {
 			if (rgo.dy < 0) {
-				// flip rainbow
-				//this.startFlip();
-				
-				// bounce up on collision
-				if (this.bouncePower != 0) {
-					rgo.dy = this.bouncePower;
-				}
+				rgo.dy = rgo.level.definition.normalBouncePower;
 				
 				// play sound effect
 				var temp:Number = Math.random() * 3;

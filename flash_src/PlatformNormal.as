@@ -2,19 +2,12 @@
 	import flash.events.*;
 	
 	public dynamic class PlatformNormal extends GameObject {
-		public var bouncePower:Number = 1.5;
 		private var flipStep:uint;
 		private var isFlipping:Boolean = false;
 		
 		public function contact(rgo:RainbowGameObject) {
 			if (rgo.dy < 0) {
-				// flip rainbow
-				//this.startFlip();
-				
-				// bounce up on collision
-				if (this.bouncePower != 0) {
-					rgo.dy = this.bouncePower;
-				}
+				rgo.dy = rgo.level.definition.normalBouncePower;
 				
 				// play sound effect
 				var temp:Number = Math.random() * 3;
@@ -49,14 +42,6 @@
 			if (flipStep == 0) {
 				this.removeEventListener(Event.ENTER_FRAME, flip);
 			}
-		}
-		
-		public function testCollision(hero:Hero) {
-			if (this.hitTestPoint(hero.x - 20, hero.y + 16, true) ||
-				this.hitTestPoint(hero.x + 20, hero.y + 16, true)) {
-				return true
-			}
-			return false;
 		}
 	}
 }

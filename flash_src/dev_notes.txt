@@ -2,7 +2,6 @@
 
 ==Tasks for today==
 climb distance with time limit
-design level 1
 Powerup: Jetpack (increases bounce distance for set duration)
 SoF rises when struck
 

@@ -39,6 +39,7 @@
 			if (this.abilityReady) {
 				// activate ability
 				this.rgo.dy = 1.5;
+				rgo.soundControl.playBoom();
 				
 				this.abilityReady = false;
 				this.abilityTimer = new Timer(5000, 1);

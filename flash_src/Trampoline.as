@@ -1,14 +1,9 @@
 ﻿package  {
 	public class Trampoline extends PlatformNormal {
 		
-		public function Trampoline() {
-			super();
-			this.bouncePower = 2.0;
-		}
-		
 		public override function contact(rgo:RainbowGameObject) {
 			if (rgo.dy < 0) {
-				rgo.dy = this.bouncePower;
+				rgo.dy = rgo.level.definition.trampolineBouncePower;
 				
 				// play sound effect
 				var temp:Number = Math.random() * 3;
