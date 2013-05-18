@@ -105,8 +105,10 @@
 					if ([Level.PlatformNormal, Level.PlatformDrop, Level.PlatformMobile, Level.Trampoline].indexOf(elementClass) != -1) {
 						elementSize = String(this.getElementSizeByDistribution(sizeDistribution));
 					}
-					this.level.addElement(y, x, elementClass + elementSize);
-					this.level.addElement(y + unitHeight, x, Level.Coin);
+					this.level.levelElementsArray.push([y, x, elementClass + elementSize]);
+					this.level.levelElementsArray.push([y + unitHeight, x, Level.Coin]);
+					//this.level.addElement(y, x, elementClass + elementSize);
+					//this.level.addElement(y + unitHeight, x, Level.Coin);
 				}
 				currentY += rowHeight;
 			}
@@ -179,9 +181,12 @@
 			var rowHeight:Number = unitHeight * 3;
 			var currentY:Number = yMin * unitHeight;
 			while (currentY <= yMax * unitHeight) {
-				this.level.addElement(currentY, -100, Level.AntigravDot);
-				this.level.addElement(currentY, 0, Level.AntigravDot);
-				this.level.addElement(currentY, 100, Level.AntigravDot);
+				this.level.levelElementsArray.push([currentY, -100, Level.AntigravDot]);
+				this.level.levelElementsArray.push([currentY, 0, Level.AntigravDot]);
+				this.level.levelElementsArray.push([currentY, 100, Level.AntigravDot]);
+				//this.level.addElement(currentY, -100, Level.AntigravDot);
+				//this.level.addElement(currentY, 0, Level.AntigravDot);
+				//this.level.addElement(currentY, 100, Level.AntigravDot);
 				currentY += unitHeight;
 			}
 		}

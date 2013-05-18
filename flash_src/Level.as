@@ -19,6 +19,7 @@
 		public var rgo:RainbowGameObject;
 		public var target:uint; // climb distance target
 		private var level:uint; // level number
+		public var levelElementsArray:Array;
 		//public var isDistance:Boolean = false; // this is a climb distance level
 		//public var numVerticalSections:uint = 6; // number of rows per screen
 		//public var yVariation:Boolean = false; // whether platform y coord is random
@@ -46,6 +47,8 @@
 			var level = new levelClass();
 			var stageContents:Array = level.getContents();
 			var currentY:int = 0;
+			this.levelElementsArray = new Array();
+			// expand level definition file into level elements array
 			for each (var element:Array in stageContents) {
 				if (element[0] == Generator) {
 					var generator:LevelGenerator = new LevelGenerator(this, element[1], currentY + element[2], currentY + element[3], level.unitHeight);
@@ -53,12 +56,16 @@
 				} else {
 					currentY += element[0];
 					if (element[3] == undefined) {
-						this.addElement(currentY * level.unitHeight, element[1], element[2]);
+						this.levelElementsArray.push([currentY * level.unitHeight, element[1], element[2]]);
+						//this.addElement(currentY * level.unitHeight, element[1], element[2]);
 					} else {
-						this.addElement(currentY * level.unitHeight, element[1], element[2] + element[3]);
+						this.levelElementsArray.push([currentY * level.unitHeight, element[1], element[2] + element[3]]);
+						//this.addElement(currentY * level.unitHeight, element[1], element[2] + element[3]);
 					}
 				}
 			}
+			
+			
 		}
 		
 		// add an element to stage

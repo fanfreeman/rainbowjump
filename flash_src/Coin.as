@@ -1,7 +1,9 @@
 ﻿package  {
 	
 	public class Coin extends GameObject {
-
+		
+		private var collected:Boolean = false;
+		
 		public function Coin() {
 			// constructor code
 		}
@@ -15,10 +17,14 @@
 		}
 		
 		public function contact(rgo:RainbowGameObject) {
-			// play sound effect
-			rgo.soundControl.playGotCoin();
-			// remove coin
-			rgo.removeChild(this);
+			if (!collected) {
+				// play sound effect
+				rgo.soundControl.playGotCoin();
+				// remove coin
+				this.visible = false;
+				
+				this.collected = true;
+			}
 		}
 	}
 }

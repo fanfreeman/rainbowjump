@@ -407,8 +407,8 @@
 		 */
 		public function removeElement(index) {
 			removeChild(this.rainbowList[index]);
-			//this.rainbowList[index] = null;
-			//this.rainbowList.splice(index, 1);
+			this.rainbowList[index] = null;
+			this.rainbowList.splice(index, 1);
 		}
 		
 		/**
@@ -418,10 +418,10 @@
 			for (var index:String in rainbowList) {
 				rainbowList[index].setY(rainbowList[index].my - distance);
 				
-				// remove a rainbow if it has scrolled beyond visible screen
-				//if (rainbowList[index].my <= -1 * StageHeight / 2) {
-					//this.removeRainbow(index);
-				//}
+				// remove a rainbow if it has scrolled below sea of fire
+				if (rainbowList[index].my < (-StageHeight)) {
+					this.removeElement(index);
+				}
 			}
 			
 //			this.scrollDist += distance;
@@ -429,6 +429,14 @@
 //				this.addRainbows(false);
 //				this.scrollDist -= StageHeight / 2;
 //			}
+
+			// populate area above visible stage with next elements in level elements array
+			var PopulateSpan = StageHeight;
+			while (this.level.levelElementsArray[0][0] < this.climbDist + PopulateSpan) {
+				var levelElement:Array = this.level.levelElementsArray[0];
+				this.level.addElement(levelElement[0] - this.climbDist, levelElement[1], levelElement[2]);
+				this.level.levelElementsArray.splice(0, 1);
+			}
 		}
 		
 		private function scrollSeaOfFire(timeDiff:int) {
