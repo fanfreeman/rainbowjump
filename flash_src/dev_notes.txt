@@ -1,9 +1,13 @@
 ﻿book page 160
 
 ==Tasks for today==
-climb distance with time limit
-Powerup: Jetpack (increases bounce distance for set duration)
-SoF rises when struck
+make level high
+basic facebook integration
+bounce sound effect
+full screen particle effect
+dynamic background elements (waterfall, flying witch, moon)
+special ability particles and sound
+special ability indicator
 
 ==Platforms==
 - normal rainbow
@@ -26,6 +30,8 @@ ice cubes
 gems
 boulder (bounces off and destroys platforms in its path, combine with many small platforms)
 - antigrav dots
+swinging ball
+
 
 ==Game Modes==
 climb distance
@@ -53,6 +59,7 @@ Balloonify Duration+
 - Sea of fire
 - Touch dots for boost
 - One special ability with cooldown
+Autopilot on collecting glyphs
 Random special ability item
 break balloons/icecubes within time limit, or SoF rises
 Mobile skywalls
@@ -87,4 +94,7 @@ http://medialoot.com/item/free-vector-clouds/
 
 Sounds:
 http://soundbible.com/tags-cartoon.html
+
+Songs:
+中村由利子 Dreamy Winter (1994) - 雪之传说
 

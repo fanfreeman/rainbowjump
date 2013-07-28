@@ -9,6 +9,7 @@
 	import flash.net.URLLoader;
     import flash.net.URLRequest;
 	import com.coreyoneil.collision.CollisionList;
+	import net.hires.debug.Stats;
 	
 	public class RainbowGameObject extends MovieClip {
 		// constants
@@ -101,6 +102,9 @@
 		/* eof instance variables */
 		
 		public function RainbowGameObject() {
+			// performance debug stats
+			addChild( new Stats() );
+			
 			// load configuration file
 			this.configXMLPath = "config.xml";
 			var configRequest:URLRequest = new URLRequest();
